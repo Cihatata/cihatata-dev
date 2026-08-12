@@ -1,5 +1,5 @@
 ---
-import PostCard from './PostCard.astro';
+import PostRow from './PostRow.astro';
 import EmptyState from '~/components/ui/EmptyState.astro';
 import type { Post } from '~/lib/blog';
 import { useTranslations, type Locale } from '~/i18n/utils';
@@ -7,12 +7,11 @@ import { useTranslations, type Locale } from '~/i18n/utils';
 interface Props {
   posts: Post[];
   locale: Locale;
-  variant?: 'card' | 'row';
   /** Renders only the first N posts; omit to render everything. */
   limit?: number;
 }
 
-const { posts, locale, variant = 'card', limit } = Astro.props;
+const { posts, locale, limit } = Astro.props;
 const t = useTranslations(locale);
 const visible = limit ? posts.slice(0, limit) : posts;
 ---
@@ -21,10 +20,10 @@ const visible = limit ? posts.slice(0, limit) : posts;
   visible.length === 0 ? (
     <EmptyState message={t('blog.empty')} />
   ) : (
-    <div class:list={[variant === 'card' ? 'grid gap-4 sm:grid-cols-2' : 'divide-y divide-border']}>
+    <ul class="space-y-4 sm:space-y-2">
       {visible.map((post) => (
-        <PostCard post={post} locale={locale} variant={variant} />
+        <PostRow post={post} locale={locale} />
       ))}
-    </div>
+    </ul>
   )
 }

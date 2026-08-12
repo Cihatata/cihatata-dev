@@ -15,7 +15,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 
-const posts = (await getPosts(locale)).slice(0, 4);
+const posts = (await getPosts(locale)).slice(0, 6);
 const photos = getPhotos(4);
 ---
 
@@ -36,7 +36,7 @@ const photos = getPhotos(4);
           href={localizePath('/contents', locale)}
           linkLabel={t('home.allPosts')}
         />
-        <PostList posts={posts} locale={locale} variant="card" />
+        <PostList posts={posts} locale={locale} />
       </section>
     )
   }

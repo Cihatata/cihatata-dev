@@ -1,0 +1,29 @@
+---
+import type { Post } from '~/lib/blog';
+import { formatDateShort, localizePath, type Locale } from '~/i18n/utils';
+
+interface Props {
+  post: Post;
+  locale: Locale;
+}
+
+const { post, locale } = Astro.props;
+
+const href = localizePath(`/contents/blog/${post.slug}`, locale);
+---
+
+<li class="flex flex-col text-sm sm:flex-row sm:items-baseline sm:gap-4">
+  <time
+    datetime={post.data.publishedAt.toISOString()}
+    class="shrink-0 text-fg-subtle tabular-nums sm:w-28"
+  >
+    {formatDateShort(post.data.publishedAt, locale)}
+  </time>
+
+  <a
+    href={href}
+    class="min-w-0 underline decoration-fg-subtle decoration-1 underline-offset-4 transition-colors duration-200 hover:text-accent hover:decoration-accent"
+  >
+    {post.data.title}
+  </a>
+</li>
