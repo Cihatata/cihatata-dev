@@ -13,6 +13,9 @@ export default defineConfig({
     imageService: 'compile',
     platformProxy: { enabled: true },
   }),
+  // Nothing on the site is per-visitor state, so skipping sessions keeps the
+  // worker free of a KV binding it would never read.
+  session: false,
   i18n: {
     locales: ['en', 'tr'],
     defaultLocale: 'en',
