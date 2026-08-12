@@ -14,10 +14,11 @@ const t = useTranslations(locale);
 
 {/*
   Persisted across /contents ↔ videos ↔ photos so the header and tabs stay
-  mounted (no rise-in replay). A small script resyncs the active tab after
-  ClientRouter swaps the panel content.
+  mounted (no rise-in replay). Key is locale-scoped so a language switch
+  remounts the chrome instead of keeping the old locale's copy. A small
+  script resyncs the active tab after ClientRouter swaps the panel content.
 */}
-<div transition:persist="contents-chrome" data-contents-chrome>
+<div transition:persist={`contents-chrome-${locale}`} data-contents-chrome>
   <PageHeader title={t('contents.title')} description={t('contents.description')} />
   <ContentTabs locale={locale} active={active} />
 </div>

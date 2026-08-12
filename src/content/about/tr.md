@@ -1,10 +1,10 @@
 ---
 title: 'Hakkımda'
 heading: 'Merhaba!'
-description: 'GA Telesis’te Software Engineer olarak çalışıyorum, Ankara’da yaşıyorum. Kendimden biraz daha bahsedeyim.'
+description: 'Ankara’da yaşayan bir Software Engineer. Kendimden biraz daha bahsedeyim.'
 ---
 
-Ben Cihat ATA. GA Telesis'de Software Engineer olarak çalışıyorum. Ankara'da yaşıyorum. Gazi Üniversitesi Bilgisayar Mühendisliği mezunuyum. 5 yıldır sektörde Software Developer olarak çalışıyorum. JavaScript teknolojileri ile ilgileniyorum. Ürün odaklı şirketlerde çalışmayı tercih ediyorum. Öğrendiklerimi ve deneyimlerimi başkalarına aktarma konusunda hevesliyim.
+Ben Cihat ATA. Software Engineer olarak çalışıyorum, Ankara'da yaşıyorum. Gazi Üniversitesi Bilgisayar Mühendisliği mezunuyum. 5 yıldır sektörde Software Developer olarak çalışıyorum. Ağırlıklı olarak web teknolojileriyle ilgileniyor, 0'dan 1'e ürünler üretmeyi seviyor ve öğrendiklerimi paylaşmaya çalışıyorum. Arada bir de fotoğraf çekiyorum.
 
 Yeni yerler keşfetmeyi seviyorum. Zamanım olduğunda eşimle, arkadaşlarımla veya ailemle görmediğim yerlere gitmeye çalışıyorum. Çoğu yazılımcı gibi ben de kahve ile uğraşıyorum.
 

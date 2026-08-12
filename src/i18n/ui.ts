@@ -29,13 +29,13 @@ export const ui = {
     'nav.label': 'Main navigation',
 
     'hero.bio':
-      "I'm a Software Engineer at GA Telesis, based in Ankara. I mostly work with JavaScript technologies, care about product-minded teams, and enjoy sharing what I learn along the way.",
+      "I'm a Software Engineer based in Ankara. I mostly work with web technologies, enjoy building products from 0 to 1, and like sharing what I learn along the way. I also take photographs from time to time.",
     'hero.findMeOn': 'Find me on',
     'hero.avatarAlt': 'Illustrated portrait of Cihat ATA',
 
     'home.title': 'Home',
     'home.description':
-      'Software Engineer based in Ankara. Writing about JavaScript, web development, teams and the things I learn along the way.',
+      'Software Engineer based in Ankara. Writing about web technologies, building products from 0 to 1, and the things I learn along the way.',
     'home.latestPosts': 'Latest posts',
     'home.latestPhotos': 'Latest photos',
     'home.allPosts': 'All posts',
@@ -87,7 +87,7 @@ export const ui = {
 
     'about.title': 'About',
     'about.description':
-      'Software Engineer at GA Telesis, based in Ankara. Here is a little more about me.',
+      'Software Engineer based in Ankara. Here is a little more about me.',
 
     'theme.toggle': 'Toggle theme',
     'theme.light': 'Light',
@@ -112,13 +112,13 @@ export const ui = {
     'nav.label': 'Ana menü',
 
     'hero.bio':
-      'GA Telesis’te Software Engineer olarak çalışıyorum, Ankara’da yaşıyorum. Ağırlıklı olarak JavaScript teknolojileriyle ilgileniyor, ürün odaklı takımlarda çalışmayı seviyor ve öğrendiklerimi paylaşmaya çalışıyorum.',
+      'Software Engineer olarak çalışıyorum, Ankara’da yaşıyorum. Ağırlıklı olarak web teknolojileriyle ilgileniyor, 0’dan 1’e ürünler üretmeyi seviyor ve öğrendiklerimi paylaşmaya çalışıyorum. Arada bir de fotoğraf çekiyorum.',
     'hero.findMeOn': 'Bana ulaşın',
     'hero.avatarAlt': 'Cihat ATA’nın illüstrasyon portresi',
 
     'home.title': 'Ana Sayfa',
     'home.description':
-      'Ankara’da yaşayan bir Software Engineer. JavaScript, web geliştirme, takımlar ve öğrendiklerim üzerine yazıyorum.',
+      'Ankara’da yaşayan bir Software Engineer. Web teknolojileri, 0’dan 1’e ürünler ve öğrendiklerim üzerine yazıyorum.',
     'home.latestPosts': 'Son yazılar',
     'home.latestPhotos': 'Son fotoğraflar',
     'home.allPosts': 'Tüm yazılar',
@@ -171,7 +171,7 @@ export const ui = {
 
     'about.title': 'Hakkımda',
     'about.description':
-      'GA Telesis’te Software Engineer, Ankara’da yaşıyorum. Kendimden biraz daha bahsedeyim.',
+      'Ankara’da yaşayan bir Software Engineer. Kendimden biraz daha bahsedeyim.',
 
     'theme.toggle': 'Temayı değiştir',
     'theme.light': 'Açık',

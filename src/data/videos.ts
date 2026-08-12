@@ -18,7 +18,40 @@ export type VideoEntry = {
  * Videos are curated by hand. Add an entry here and it shows up under
  * Contents → Videos in both languages.
  */
-export const VIDEOS: VideoEntry[] = [];
+export const VIDEOS: VideoEntry[] = [
+  {
+    id: 'frontend-egitimi-2',
+    url: 'https://www.youtube.com/watch?v=tJOxAb_LdQk',
+    youtubeId: 'tJOxAb_LdQk',
+    publishedAt: '2024-12-15',
+    duration: '1:49:52',
+    en: {
+      title: 'Front-End Training — Day 2',
+      description:
+        'Second day of the front-end training hosted by Ankara University Computer Society.',
+    },
+    tr: {
+      title: 'Front-End Eğitimi — 2. Gün',
+      description: 'Ankara Üniversitesi Computer Society bünyesinde verdiğim front-end eğitiminin ikinci günü.',
+    },
+  },
+  {
+    id: 'frontend-egitimi-1',
+    url: 'https://www.youtube.com/watch?v=c2Nknn6spjY',
+    youtubeId: 'c2Nknn6spjY',
+    publishedAt: '2024-11-22',
+    duration: '1:38:56',
+    en: {
+      title: 'Front-End Training — Day 1',
+      description:
+        'First day of the front-end training hosted by Ankara University Computer Society.',
+    },
+    tr: {
+      title: 'Front-End Eğitimi — 1. Gün',
+      description: 'Ankara Üniversitesi Computer Society bünyesinde verdiğim front-end eğitiminin birinci günü.',
+    },
+  },
+];
 
 export function getVideos(): VideoEntry[] {
   return VIDEOS.slice().sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
