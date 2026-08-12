@@ -19,7 +19,8 @@
     "deploy": "astro build && wrangler deploy",
     "fetch:unsplash": "node scripts/fetch-unsplash.mjs",
     "migrate:medium": "node scripts/migrate-medium.mjs",
-    "fetch:tools": "node scripts/fetch-tools-assets.mjs"
+    "fetch:tools": "node scripts/fetch-tools-assets.mjs",
+    "generate:icons": "node scripts/generate-icons.mjs"
   },
   "pnpm": {
     "onlyBuiltDependencies": ["esbuild", "sharp", "workerd"]
