@@ -1,0 +1,404 @@
+@import 'tailwindcss';
+@import './glass.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens
+   Raw values live on :root / .dark so they can be swapped at runtime, then get
+   mapped into Tailwind's theme below.
+--------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  --bg: oklch(98.4% 0.002 260);
+  --bg-elevated: oklch(100% 0 0);
+  --fg: oklch(21% 0.012 265);
+  --fg-muted: oklch(52% 0.014 265);
+  --fg-subtle: oklch(64% 0.012 265);
+  --border: oklch(90% 0.006 265);
+  --border-strong: oklch(84% 0.008 265);
+  --accent: oklch(55% 0.19 258);
+  --accent-contrast: oklch(99% 0 0);
+  --selection: oklch(88% 0.07 258);
+
+  /* Liquid glass */
+  --glass-bg: rgb(255 255 255 / 0.62);
+  --glass-bg-strong: rgb(255 255 255 / 0.78);
+  --glass-border: rgb(255 255 255 / 0.7);
+  --glass-ring: rgb(0 0 0 / 0.06);
+  --glass-highlight: rgb(255 255 255 / 0.9);
+  --glass-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -8px rgb(0 0 0 / 0.12);
+  --glass-tint: rgb(255 255 255 / 0.35);
+  --glass-blur: 20px;
+  --glass-saturate: 180%;
+
+  /* Motion */
+  --ease-glass: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 520ms;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: oklch(15.5% 0.008 265);
+  --bg-elevated: oklch(19.5% 0.009 265);
+  --fg: oklch(96% 0.003 265);
+  --fg-muted: oklch(72% 0.011 265);
+  --fg-subtle: oklch(58% 0.011 265);
+  --border: oklch(28% 0.01 265);
+  --border-strong: oklch(35% 0.012 265);
+  --accent: oklch(72% 0.15 255);
+  --accent-contrast: oklch(16% 0.01 265);
+  --selection: oklch(40% 0.11 258);
+
+  --glass-bg: rgb(28 28 34 / 0.6);
+  --glass-bg-strong: rgb(28 28 34 / 0.78);
+  --glass-border: rgb(255 255 255 / 0.12);
+  --glass-ring: rgb(255 255 255 / 0.06);
+  --glass-highlight: rgb(255 255 255 / 0.22);
+  --glass-shadow: 0 1px 2px rgb(0 0 0 / 0.5), 0 12px 32px -12px rgb(0 0 0 / 0.7);
+  --glass-tint: rgb(255 255 255 / 0.04);
+  --glass-saturate: 160%;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+
+  --font-sans:
+    ui-sans-serif, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Apple Color Emoji', sans-serif;
+  --font-mono:
+    ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, 'Cascadia Mono', 'Roboto Mono',
+    monospace;
+
+  --ease-glass: var(--ease-glass);
+  --ease-out-soft: var(--ease-out-soft);
+
+  --container-page: 48rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background-color: var(--selection);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Layout helpers
+--------------------------------------------------------------------------- */
+
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Ambient light blobs that give the glass surfaces something to refract. */
+.ambient-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-canvas::before,
+.ambient-canvas::after {
+  content: '';
+  position: absolute;
+  width: 42rem;
+  height: 42rem;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.5;
+}
+
+.ambient-canvas::before {
+  top: -14rem;
+  left: -10rem;
+  background: radial-gradient(circle, oklch(78% 0.13 255 / 0.5), transparent 68%);
+}
+
+.ambient-canvas::after {
+  top: 22rem;
+  right: -14rem;
+  background: radial-gradient(circle, oklch(80% 0.11 330 / 0.42), transparent 68%);
+}
+
+.dark .ambient-canvas::before,
+.dark .ambient-canvas::after {
+  opacity: 0.3;
+}
+
+/* ---------------------------------------------------------------------------
+   Entrance animation
+--------------------------------------------------------------------------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-rise {
+  animation: rise-in var(--duration-slow) var(--ease-out-soft) both;
+}
+
+/* ---------------------------------------------------------------------------
+   View transitions
+--------------------------------------------------------------------------- */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: vt-fade-out var(--duration-base) var(--ease-glass) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-fade-in var(--duration-base) var(--ease-glass) both;
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+::view-transition-group(nav-indicator) {
+  animation-duration: var(--duration-base);
+  animation-timing-function: var(--ease-glass);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Long-form content
+--------------------------------------------------------------------------- */
+
+.prose {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--fg);
+}
+
+.prose > * + * {
+  margin-top: 1.25em;
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin-top: 2.25em;
+  margin-bottom: -0.35em;
+  scroll-margin-top: 6rem;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+}
+
+.prose h4 {
+  font-size: 1.0625rem;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: opacity var(--duration-fast) var(--ease-glass);
+}
+
+.prose a:hover {
+  opacity: 0.72;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.35em;
+}
+
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+.prose li::marker {
+  color: var(--fg-subtle);
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.15em;
+  color: var(--fg-muted);
+  font-style: italic;
+}
+
+.prose img {
+  border-radius: 1rem;
+  width: 100%;
+  height: auto;
+  box-shadow: var(--glass-shadow);
+}
+
+.prose figure {
+  margin-block: 2em;
+}
+
+.prose figcaption {
+  margin-top: 0.75em;
+  font-size: 0.8125rem;
+  color: var(--fg-subtle);
+  text-align: center;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-block: 2.5em;
+}
+
+.prose code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--glass-tint);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.1em 0.35em;
+}
+
+.prose pre {
+  font-size: 0.875rem;
+  padding: 1.15rem 1.25rem;
+  border-radius: 0.875rem;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.dark .prose :is(pre, pre span) {
+  color: var(--shiki-dark, inherit) !important;
+  background-color: var(--shiki-dark-bg, transparent) !important;
+  font-style: var(--shiki-dark-font-style, inherit) !important;
+  font-weight: var(--shiki-dark-font-weight, inherit) !important;
+}
