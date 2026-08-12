@@ -24,4 +24,14 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { blog };
+/** One markdown file per locale, named after the locale code. */
+const about = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/about' }),
+  schema: z.object({
+    title: z.string(),
+    heading: z.string(),
+    description: z.string(),
+  }),
+});
+
+export const collections = { blog, about };

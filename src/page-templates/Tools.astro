@@ -1,0 +1,53 @@
+---
+import ToolGrid from '~/components/tools/ToolGrid.astro';
+import PageHeader from '~/components/ui/PageHeader.astro';
+import SectionHeader from '~/components/ui/SectionHeader.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { CURRENT_TOOLS, WISHLIST_TOOLS } from '~/data/tools';
+import { useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const sections = [
+  { key: 'using', intro: 'tools.usingIntro', tools: CURRENT_TOOLS },
+  { key: 'wishlist', intro: 'tools.wishlistIntro', tools: WISHLIST_TOOLS },
+] as const;
+
+const schema = [
+  {
+    '@type': 'ItemList',
+    name: t('tools.using'),
+    numberOfItems: CURRENT_TOOLS.length,
+    itemListElement: CURRENT_TOOLS.map((tool, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: `${tool.brand} ${tool[locale].name}`,
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={t('tools.title')}
+  description={t('tools.description')}
+  path="/tools"
+  locale={locale}
+  schema={schema}
+>
+  <PageHeader title={t('tools.title')} description={t('tools.description')} />
+
+  {
+    sections.map((section, index) => (
+      <section class:list={['animate-rise', index > 0 && 'mt-14']}>
+        <SectionHeader title={t(`tools.${section.key}`)} class="mb-2" />
+        <p class="mb-6 text-sm text-fg-muted">{t(section.intro)}</p>
+        <ToolGrid tools={section.tools} locale={locale} />
+      </section>
+    ))
+  }
+</BaseLayout>

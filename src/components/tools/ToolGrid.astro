@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+
+import GlassSurface from '~/components/glass/GlassSurface.astro';
+import Icon from '~/components/ui/Icon.astro';
+import type { Tool } from '~/data/tools';
+import type { Locale } from '~/i18n/utils';
+
+interface Props {
+  tools: Tool[];
+  locale: Locale;
+}
+
+const { tools, locale } = Astro.props;
+---
+
+<ul class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+  {
+    tools.map((tool) => (
+      <GlassSurface as="li" interactive sheen class="flex flex-col overflow-hidden p-4">
+        <div class="tool-shot mb-4 grid place-items-center rounded-xl">
+          {tool.image ? (
+            <Image
+              src={tool.image}
+              alt={`${tool.brand} ${tool[locale].name}`}
+              widths={[180, 360]}
+              sizes="(min-width: 48rem) 12rem, 40vw"
+              loading="lazy"
+              decoding="async"
+              class="mix-blend-multiply dark:mix-blend-normal"
+            />
+          ) : (
+            <Icon name="sparkle" size={22} class="text-fg-subtle" />
+          )}
+        </div>
+
+        <p class="text-[0.6875rem] font-medium tracking-[0.08em] text-fg-subtle uppercase">
+          {tool.brand}
+        </p>
+        <p class="mt-0.5 text-sm leading-snug font-medium">{tool[locale].name}</p>
+      </GlassSurface>
+    ))
+  }
+</ul>
+
+<style>
+  /* A soft plinth so product cut-outs do not float on the glass. The image is
+     taken out of flow so the 4:3 box stays exact and every card's caption
+     lands on the same baseline. */
+  .tool-shot {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background:
+      radial-gradient(80% 60% at 50% 100%, var(--glass-ring), transparent 70%),
+      var(--glass-tint);
+  }
+
+  .tool-shot :global(img) {
+    position: absolute;
+    inset: 0.75rem;
+    width: calc(100% - 1.5rem);
+    height: calc(100% - 1.5rem);
+    object-fit: contain;
+  }
+</style>
