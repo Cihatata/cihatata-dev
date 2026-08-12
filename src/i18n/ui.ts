@@ -88,6 +88,8 @@ export const ui = {
     'about.title': 'About',
     'about.description':
       'Software Engineer based in Ankara. Here is a little more about me.',
+    'about.experience': 'Experience',
+    'about.present': 'Present',
 
     'theme.toggle': 'Toggle theme',
     'theme.light': 'Light',
@@ -172,6 +174,8 @@ export const ui = {
     'about.title': 'Hakkımda',
     'about.description':
       'Ankara’da yaşayan bir Software Engineer. Kendimden biraz daha bahsedeyim.',
+    'about.experience': 'Deneyim',
+    'about.present': 'Günümüz',
 
     'theme.toggle': 'Temayı değiştir',
     'theme.light': 'Açık',
