@@ -1,0 +1,32 @@
+---
+import Icon from './Icon.astro';
+import { LOCALE_LABELS, LOCALE_SHORT } from '~/i18n/ui';
+import { localizePath, otherLocale, useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+  /** Locale-independent path of the current page, e.g. `/contents`. */
+  path: string;
+  class?: string;
+}
+
+const { locale, path, class: className } = Astro.props;
+const t = useTranslations(locale);
+const target = otherLocale(locale);
+---
+
+<a
+  href={localizePath(path, target)}
+  hreflang={target}
+  lang={target}
+  rel="alternate"
+  class:list={[
+    'glass glass--pill glass--interactive flex h-9 items-center gap-1.5 px-3 text-fg-muted hover:text-fg',
+    className,
+  ]}
+  aria-label={`${t('lang.switch')}: ${LOCALE_LABELS[target]}`}
+  title={LOCALE_LABELS[target]}
+>
+  <Icon name="globe" size={15} />
+  <span class="text-xs font-medium tracking-wide">{LOCALE_SHORT[target]}</span>
+</a>

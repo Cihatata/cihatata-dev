@@ -1,0 +1,67 @@
+---
+import Icon from './Icon.astro';
+import { useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+  class?: string;
+}
+
+const { locale, class: className } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  class:list={[
+    'glass glass--pill glass--interactive grid size-9 place-items-center text-fg-muted hover:text-fg',
+    className,
+  ]}
+  aria-label={t('theme.toggle')}
+  title={t('theme.toggle')}
+>
+  <Icon name="sun" size={16} class="theme-icon theme-icon--sun" />
+  <Icon name="moon" size={16} class="theme-icon theme-icon--moon" />
+</button>
+
+<style>
+  button {
+    position: relative;
+  }
+
+  .theme-icon {
+    grid-area: 1 / 1;
+    transition:
+      opacity var(--duration-base) var(--ease-glass),
+      transform var(--duration-base) var(--ease-glass);
+  }
+
+  :global(html:not(.dark)) .theme-icon--moon,
+  :global(html.dark) .theme-icon--sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.6);
+  }
+
+  :global(html.dark) .theme-icon--moon,
+  :global(html:not(.dark)) .theme-icon--sun {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+
+<script>
+  const bind = () => {
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
+      if (button.dataset.bound === 'true') return;
+      button.dataset.bound = 'true';
+      button.addEventListener('click', () => {
+        const next = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+        window.__setTheme?.(next);
+      });
+    });
+  };
+
+  bind();
+  document.addEventListener('astro:page-load', bind);
+</script>

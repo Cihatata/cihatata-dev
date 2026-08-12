@@ -1,0 +1,77 @@
+---
+import GlassSurface from '~/components/glass/GlassSurface.astro';
+import Icon from '~/components/ui/Icon.astro';
+import LangSwitcher from '~/components/ui/LangSwitcher.astro';
+import ThemeToggle from '~/components/ui/ThemeToggle.astro';
+import { resolveNavItems } from './nav-items';
+import { useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const t = useTranslations(locale);
+const items = resolveNavItems(locale, path);
+---
+
+{/* Desktop: a centred floating glass pill. */}
+<header class="pointer-events-none fixed inset-x-0 top-0 z-50 hidden pt-4 md:block">
+  <div class="container-page pointer-events-auto flex items-center justify-center gap-2">
+    <GlassSurface
+      as="nav"
+      radius="pill"
+      refract
+      class="flex items-center gap-0.5 p-1"
+      aria-label={t('nav.label')}
+    >
+      {
+        items.map((item) => (
+          <a
+            href={item.href}
+            class="nav-link rounded-full px-3.5 py-1.5 text-sm font-medium"
+            aria-current={item.isActive ? 'page' : undefined}
+          >
+            {item.isActive && <span class="nav-indicator" aria-hidden="true" />}
+            {t(item.labelKey)}
+          </a>
+        ))
+      }
+    </GlassSurface>
+
+    <div class="flex items-center gap-2">
+      <LangSwitcher locale={locale} path={path} />
+      <ThemeToggle locale={locale} />
+    </div>
+  </div>
+</header>
+
+{/* Mobile: controls at the top, primary navigation docked to the bottom. */}
+<header class="pointer-events-none fixed inset-x-0 top-0 z-50 pt-3 md:hidden">
+  <div class="container-page pointer-events-auto flex items-center justify-end gap-2">
+    <LangSwitcher locale={locale} path={path} />
+    <ThemeToggle locale={locale} />
+  </div>
+</header>
+
+<nav
+  class="fixed inset-x-0 bottom-0 z-50 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden"
+  aria-label={t('nav.label')}
+>
+  <GlassSurface radius="pill" strong refract class="flex items-stretch justify-between p-1.5">
+    {
+      items.map((item) => (
+        <a
+          href={item.href}
+          class="nav-link flex-1 flex-col gap-1 rounded-full px-1 py-1.5 text-[0.625rem] font-medium"
+          aria-current={item.isActive ? 'page' : undefined}
+        >
+          {item.isActive && <span class="nav-indicator nav-indicator--mobile" aria-hidden="true" />}
+          <Icon name={item.icon} size={19} />
+          <span>{t(item.labelKey)}</span>
+        </a>
+      ))
+    }
+  </GlassSurface>
+</nav>

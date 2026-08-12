@@ -1,0 +1,56 @@
+---
+/**
+ * Applies the stored theme before first paint and re-applies it after every
+ * view transition, since the router swaps the `<html>` attributes.
+ */
+---
+
+<script is:inline>
+  (() => {
+    const STORAGE_KEY = 'theme';
+
+    const resolve = () => {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored === 'light' || stored === 'dark') return stored;
+      } catch {
+        /* Storage can be blocked; fall back to the system preference. */
+      }
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+
+    const apply = (theme) => {
+      const root = document.documentElement;
+      root.classList.toggle('dark', theme === 'dark');
+      root.style.colorScheme = theme;
+      root.dataset.theme = theme;
+    };
+
+    apply(resolve());
+
+    if (!window.__themeBound) {
+      window.__themeBound = true;
+
+      window.__setTheme = (theme) => {
+        try {
+          localStorage.setItem(STORAGE_KEY, theme);
+        } catch {
+          /* Ignore: the theme still applies for this page view. */
+        }
+        apply(theme);
+      };
+
+      document.addEventListener('astro:after-swap', () => apply(resolve()));
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        let stored = null;
+        try {
+          stored = localStorage.getItem(STORAGE_KEY);
+        } catch {
+          /* Ignore. */
+        }
+        if (stored !== 'light' && stored !== 'dark') apply(resolve());
+      });
+    }
+  })();
+</script>

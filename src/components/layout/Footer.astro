@@ -1,0 +1,44 @@
+---
+import Icon from '~/components/ui/Icon.astro';
+import { AUTHOR, SOCIALS } from '~/config/site';
+import { localizePath, useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="container-page mt-24 border-t border-border py-8">
+  <div
+    class="flex flex-col items-center justify-between gap-4 text-xs text-fg-subtle sm:flex-row"
+  >
+    <p>&copy; {year} {AUTHOR.name}. {t('footer.rights')}</p>
+
+    <div class="flex items-center gap-4">
+      {
+        SOCIALS.map((social) => (
+          <a
+            href={social.href}
+            rel="me noopener noreferrer"
+            target="_blank"
+            class="transition-colors hover:text-fg"
+            aria-label={social.label}
+          >
+            <Icon name={social.id} size={15} />
+          </a>
+        ))
+      }
+      <a
+        href={localizePath('/rss.xml', locale)}
+        class="flex items-center gap-1.5 transition-colors hover:text-fg"
+      >
+        <Icon name="rss" size={14} />
+        <span>{t('footer.rss')}</span>
+      </a>
+    </div>
+  </div>
+</footer>

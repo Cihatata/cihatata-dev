@@ -1,0 +1,137 @@
+---
+import { ClientRouter } from 'astro:transitions';
+
+import GlassFilters from '~/components/glass/GlassFilters.astro';
+import Footer from '~/components/layout/Footer.astro';
+import Navigation from '~/components/nav/Navigation.astro';
+import JsonLd from '~/components/seo/JsonLd.astro';
+import Seo from '~/components/seo/Seo.astro';
+import ThemeScript from '~/components/ui/ThemeScript.astro';
+import { AUTHOR, EXTRA_PROFILES, SOCIALS } from '~/config/site';
+import { absoluteUrl, localizePath, useTranslations, type Locale } from '~/i18n/utils';
+import '~/styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Locale-independent path, e.g. `/tools`. */
+  path: string;
+  locale: Locale;
+  type?: 'website' | 'article' | 'profile';
+  image?: string;
+  imageAlt?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  tags?: readonly string[];
+  noindex?: boolean;
+  availableLocales?: readonly Locale[];
+  /** Page-specific structured data appended to the site-wide graph. */
+  schema?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  path,
+  locale,
+  type,
+  image,
+  imageAlt,
+  publishedTime,
+  modifiedTime,
+  tags,
+  noindex,
+  availableLocales,
+  schema = [],
+} = Astro.props;
+
+const t = useTranslations(locale);
+const site = Astro.site ?? new URL('https://cihatata.dev');
+
+const personId = `${site.origin}/#person`;
+const websiteId = `${site.origin}/#website`;
+
+const baseSchema: Record<string, unknown>[] = [
+  {
+    '@type': 'Person',
+    '@id': personId,
+    name: AUTHOR.name,
+    url: site.origin,
+    image: absoluteUrl('/avatar.png', site),
+    jobTitle: AUTHOR.jobTitle,
+    worksFor: { '@type': 'Organization', name: AUTHOR.company },
+    address: { '@type': 'PostalAddress', addressLocality: 'Ankara', addressCountry: 'TR' },
+    sameAs: [...SOCIALS.map((social) => social.href), ...EXTRA_PROFILES],
+  },
+  {
+    '@type': 'WebSite',
+    '@id': websiteId,
+    url: site.origin,
+    name: AUTHOR.name,
+    description,
+    inLanguage: locale,
+    publisher: { '@id': personId },
+  },
+  ...schema,
+];
+---
+
+<!doctype html>
+<html lang={locale} class="scroll-pt-24">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="light dark" />
+
+    <ThemeScript />
+
+    <Seo
+      title={title}
+      description={description}
+      path={path}
+      locale={locale}
+      type={type}
+      image={image}
+      imageAlt={imageAlt}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      tags={tags}
+      noindex={noindex}
+      availableLocales={availableLocales}
+    />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+
+    <JsonLd schema={baseSchema} />
+
+    <ClientRouter />
+    <slot name="head" />
+  </head>
+
+  <body>
+    <div class="ambient-canvas" aria-hidden="true"></div>
+    <GlassFilters />
+
+    <a
+      href="#main"
+      class="sr-only rounded-full px-4 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-bg-elevated focus:shadow-lg"
+    >
+      {t('skip.content')}
+    </a>
+
+    <Navigation locale={locale} path={path} />
+
+    <main id="main" class="container-page pt-24 pb-28 md:pt-32 md:pb-16">
+      <slot />
+    </main>
+
+    <Footer locale={locale} />
+  </body>
+</html>
