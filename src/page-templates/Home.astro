@@ -1,0 +1,22 @@
+---
+import Hero from '~/components/home/Hero.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  title={t('home.title')}
+  description={t('home.description')}
+  path="/"
+  locale={locale}
+  type="profile"
+>
+  <Hero locale={locale} />
+</BaseLayout>
