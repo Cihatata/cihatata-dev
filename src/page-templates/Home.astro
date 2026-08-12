@@ -1,7 +1,12 @@
 ---
+import PostList from '~/components/blog/PostList.astro';
 import Hero from '~/components/home/Hero.astro';
+import PhotoGrid from '~/components/photos/PhotoGrid.astro';
+import SectionHeader from '~/components/ui/SectionHeader.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import { useTranslations, type Locale } from '~/i18n/utils';
+import { getPosts } from '~/lib/blog';
+import { getPhotos } from '~/lib/photos';
+import { localizePath, useTranslations, type Locale } from '~/i18n/utils';
 
 interface Props {
   locale: Locale;
@@ -9,6 +14,9 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+
+const posts = (await getPosts(locale)).slice(0, 4);
+const photos = getPhotos(4);
 ---
 
 <BaseLayout
@@ -19,4 +27,30 @@ const t = useTranslations(locale);
   type="profile"
 >
   <Hero locale={locale} />
+
+  {
+    posts.length > 0 && (
+      <section class="mt-16">
+        <SectionHeader
+          title={t('home.latestPosts')}
+          href={localizePath('/contents', locale)}
+          linkLabel={t('home.allPosts')}
+        />
+        <PostList posts={posts} locale={locale} variant="card" />
+      </section>
+    )
+  }
+
+  {
+    photos.length > 0 && (
+      <section class="mt-16">
+        <SectionHeader
+          title={t('home.latestPhotos')}
+          href={localizePath('/contents/photos', locale)}
+          linkLabel={t('home.allPhotos')}
+        />
+        <PhotoGrid photos={photos} locale={locale} layout="tiles" />
+      </section>
+    )
+  }
 </BaseLayout>
