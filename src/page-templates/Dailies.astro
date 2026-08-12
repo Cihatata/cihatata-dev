@@ -1,0 +1,73 @@
+---
+import GlassSurface from '~/components/glass/GlassSurface.astro';
+import Icon from '~/components/ui/Icon.astro';
+import PageHeader from '~/components/ui/PageHeader.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  title={t('dailies.title')}
+  description={t('dailies.description')}
+  path="/dailies"
+  locale={locale}
+>
+  <PageHeader title={t('dailies.title')} />
+
+  <GlassSurface class="animate-rise relative overflow-hidden px-6 py-16 text-center sm:py-20">
+    <span class="pulse-ring mx-auto grid size-14 place-items-center rounded-full">
+      <Icon name="calendar" size={22} class="text-fg-muted" />
+    </span>
+
+    <p
+      class="mt-6 text-xs font-medium tracking-[0.16em] text-fg-subtle uppercase"
+    >
+      {t('dailies.comingSoon')}
+    </p>
+    <p class="mx-auto mt-3 max-w-md text-fg-muted">{t('dailies.body')}</p>
+  </GlassSurface>
+</BaseLayout>
+
+<style>
+  /* A slow breathing ring so the empty state still feels alive. */
+  .pulse-ring {
+    position: relative;
+    border: 1px solid var(--glass-border);
+    background-color: var(--glass-tint);
+  }
+
+  .pulse-ring::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    border: 1px solid var(--glass-border);
+    animation: breathe 3.6s var(--ease-glass) infinite;
+  }
+
+  @keyframes breathe {
+    0%,
+    100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0;
+      transform: scale(1.18);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pulse-ring::after {
+      animation: none;
+      opacity: 0.4;
+    }
+  }
+</style>
