@@ -1,0 +1,46 @@
+---
+import ContentTabs from '~/components/contents/ContentTabs.astro';
+import PostList from '~/components/blog/PostList.astro';
+import TagPill from '~/components/ui/TagPill.astro';
+import PageHeader from '~/components/ui/PageHeader.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { collectTags, getPosts } from '~/lib/blog';
+import { localizePath, useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const posts = await getPosts(locale);
+const tags = collectTags(posts);
+---
+
+<BaseLayout
+  title={t('contents.title')}
+  description={t('contents.description')}
+  path="/contents"
+  locale={locale}
+>
+  <PageHeader title={t('contents.title')} description={t('contents.description')} />
+
+  <ContentTabs locale={locale} active="blogs" />
+
+  {
+    tags.length > 0 && (
+      <div class="mb-8 flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <TagPill
+            label={tag.label}
+            count={tag.count}
+            href={localizePath(`/contents/tag/${tag.slug}`, locale)}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  <PostList posts={posts} locale={locale} variant="row" />
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  href?: string;
+  linkLabel?: string;
+  class?: string;
+}
+
+const { title, href, linkLabel, class: className } = Astro.props;
+---
+
+<div class:list={['mb-5 flex items-baseline justify-between gap-4', className]}>
+  <h2 class="text-lg font-semibold">{title}</h2>
+  {
+    href && linkLabel && (
+      <a
+        href={href}
+        class="group inline-flex shrink-0 items-center gap-1 text-sm text-fg-muted transition-colors hover:text-fg"
+      >
+        {linkLabel}
+        <Icon
+          name="arrowRight"
+          size={14}
+          class="transition-transform duration-300 ease-[var(--ease-glass)] group-hover:translate-x-0.5"
+        />
+      </a>
+    )
+  }
+</div>

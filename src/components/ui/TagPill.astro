@@ -1,0 +1,26 @@
+---
+interface Props {
+  label: string;
+  href?: string;
+  count?: number;
+  active?: boolean;
+}
+
+const { label, href, count, active = false } = Astro.props;
+const Tag = href ? 'a' : 'span';
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition-all duration-300 ease-[var(--ease-glass)]',
+    active
+      ? 'border-transparent bg-fg text-bg'
+      : 'border-border text-fg-muted hover:border-border-strong hover:text-fg',
+    href && !active && 'hover:-translate-y-px',
+  ]}
+  aria-current={active ? 'page' : undefined}
+>
+  {label}
+  {count !== undefined && <span class="tabular-nums opacity-60">{count}</span>}
+</Tag>

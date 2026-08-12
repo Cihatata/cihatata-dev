@@ -1,0 +1,8 @@
+---
+import BlogPost from '~/page-templates/BlogPost.astro';
+
+const { slug } = Astro.params;
+if (!slug) return Astro.rewrite('/404');
+---
+
+<BlogPost locale="tr" slug={slug} />

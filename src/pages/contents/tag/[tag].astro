@@ -1,0 +1,8 @@
+---
+import TagArchive from '~/page-templates/TagArchive.astro';
+
+const { tag } = Astro.params;
+if (!tag) return Astro.rewrite('/404');
+---
+
+<TagArchive locale="en" tag={tag} />

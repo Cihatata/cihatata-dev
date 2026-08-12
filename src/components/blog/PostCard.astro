@@ -1,0 +1,103 @@
+---
+import GlassSurface from '~/components/glass/GlassSurface.astro';
+import Icon from '~/components/ui/Icon.astro';
+import type { Post } from '~/lib/blog';
+import { formatDateShort, localizePath, useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  post: Post;
+  locale: Locale;
+  /** `card` is used on the home page, `row` in the dense archive listing. */
+  variant?: 'card' | 'row';
+}
+
+const { post, locale, variant = 'card' } = Astro.props;
+const t = useTranslations(locale);
+
+const href = localizePath(`/contents/blog/${post.slug}`, locale);
+const published = formatDateShort(post.data.publishedAt, locale);
+const isoDate = post.data.publishedAt.toISOString();
+---
+
+{
+  variant === 'card' ? (
+    <GlassSurface as="article" interactive sheen class="group relative p-5">
+      <div class="flex items-center gap-2 text-xs text-fg-subtle">
+        <time datetime={isoDate}>{published}</time>
+        <span aria-hidden="true">·</span>
+        <span class="inline-flex items-center gap-1">
+          <Icon name="clock" size={12} />
+          {t('blog.readingTime', { n: post.readingMinutes })}
+        </span>
+      </div>
+
+      <h3 class="mt-2 leading-snug font-semibold">
+        <a href={href} class="after:absolute after:inset-0">
+          {post.data.title}
+        </a>
+      </h3>
+
+      <p class="mt-2 line-clamp-2 text-sm text-fg-muted">{post.data.description}</p>
+    </GlassSurface>
+  ) : (
+    <article class="post-row group relative -mx-3 rounded-2xl px-3 py-4 transition-colors duration-300 ease-[var(--ease-glass)]">
+      <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-5">
+        <time
+          datetime={isoDate}
+          class="shrink-0 text-xs text-fg-subtle tabular-nums sm:w-28"
+        >
+          {published}
+        </time>
+
+        <div class="min-w-0">
+          <h3 class="leading-snug font-medium">
+            <a href={href} class="after:absolute after:inset-0">
+              {post.data.title}
+            </a>
+          </h3>
+          <p class="mt-1 line-clamp-2 text-sm text-fg-muted">{post.data.description}</p>
+          <p class="mt-1.5 text-xs text-fg-subtle">
+            {t('blog.readingTime', { n: post.readingMinutes })}
+          </p>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+<style>
+  .post-row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: var(--glass-tint);
+    border: 1px solid transparent;
+    opacity: 0;
+    transform: scale(0.985);
+    transition:
+      opacity var(--duration-base) var(--ease-glass),
+      transform var(--duration-base) var(--ease-glass);
+  }
+
+  .post-row {
+    isolation: isolate;
+  }
+
+  .post-row:hover::before,
+  .post-row:focus-within::before {
+    opacity: 1;
+    transform: scale(1);
+    border-color: var(--glass-border);
+    box-shadow: inset 0 1px 0 0 var(--glass-highlight);
+  }
+
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .post-row:hover::before,
+    .post-row:focus-within::before {
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      backdrop-filter: blur(14px) saturate(160%);
+    }
+  }
+</style>

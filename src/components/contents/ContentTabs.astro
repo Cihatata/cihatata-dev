@@ -1,0 +1,49 @@
+---
+import GlassSurface from '~/components/glass/GlassSurface.astro';
+import Icon from '~/components/ui/Icon.astro';
+import type { IconName } from '~/components/ui/icons';
+import { localizePath, useTranslations, type Locale, type TranslationKey } from '~/i18n/utils';
+
+export type ContentTab = 'blogs' | 'videos' | 'photos';
+
+interface Props {
+  locale: Locale;
+  active: ContentTab;
+}
+
+const { locale, active } = Astro.props;
+const t = useTranslations(locale);
+
+const TABS: { id: ContentTab; path: string; icon: IconName }[] = [
+  { id: 'blogs', path: '/contents', icon: 'pen' },
+  { id: 'videos', path: '/contents/videos', icon: 'play' },
+  { id: 'photos', path: '/contents/photos', icon: 'camera' },
+];
+---
+
+<GlassSurface
+  as="nav"
+  radius="pill"
+  class="mb-8 inline-flex w-full items-center gap-0.5 p-1 sm:w-auto"
+  aria-label={t('contents.title')}
+>
+  {
+    TABS.map((tab) => (
+      <a
+        href={localizePath(tab.path, locale)}
+        class="nav-link flex-1 gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium sm:flex-none"
+        aria-current={tab.id === active ? 'page' : undefined}
+      >
+        {tab.id === active && <span class="nav-indicator nav-indicator--tabs" aria-hidden="true" />}
+        <Icon name={tab.icon} size={15} />
+        {t(`contents.${tab.id}` as TranslationKey)}
+      </a>
+    ))
+  }
+</GlassSurface>
+
+<style>
+  .nav-indicator--tabs {
+    view-transition-name: content-tab-indicator;
+  }
+</style>

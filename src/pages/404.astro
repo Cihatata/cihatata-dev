@@ -1,0 +1,32 @@
+---
+import Icon from '~/components/ui/Icon.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { localeFromPath, localizePath, useTranslations } from '~/i18n/utils';
+
+// A single 404 serves both language trees, so the locale comes from the URL
+// that was actually requested.
+const locale = localeFromPath(Astro.url.pathname);
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  title={t('notFound.title')}
+  description={t('notFound.body')}
+  path="/404"
+  locale={locale}
+  noindex
+>
+  <div class="animate-rise flex flex-col items-center py-16 text-center">
+    <p class="text-6xl font-semibold tracking-tight text-fg-subtle tabular-nums">404</p>
+    <h1 class="mt-4 text-2xl font-semibold">{t('notFound.title')}</h1>
+    <p class="mt-2 max-w-sm text-fg-muted">{t('notFound.body')}</p>
+
+    <a
+      href={localizePath('/', locale)}
+      class="glass glass--pill glass--interactive glass--sheen mt-8 inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium"
+    >
+      <Icon name="home" size={15} />
+      {t('notFound.cta')}
+    </a>
+  </div>
+</BaseLayout>

@@ -360,6 +360,16 @@
   text-align: center;
 }
 
+/* Imported posts express captions as an italic paragraph after the image. */
+.prose p:has(> img) + p > em:only-child {
+  display: block;
+  margin-top: -0.5em;
+  font-size: 0.8125rem;
+  font-style: normal;
+  color: var(--fg-subtle);
+  text-align: center;
+}
+
 .prose hr {
   border: none;
   border-top: 1px solid var(--border);

@@ -1,0 +1,178 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+
+import GlassSurface from '~/components/glass/GlassSurface.astro';
+import Icon from '~/components/ui/Icon.astro';
+import TagPill from '~/components/ui/TagPill.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { AUTHOR } from '~/config/site';
+import { getPost, getPostLocales } from '~/lib/blog';
+import { slugify } from '~/lib/slug';
+import {
+  absoluteUrl,
+  formatDate,
+  localizePath,
+  otherLocale,
+  useTranslations,
+  type Locale,
+} from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+
+const { locale, slug } = Astro.props;
+const t = useTranslations(locale);
+
+const post = await getPost(locale, slug);
+if (!post) return Astro.rewrite('/404');
+
+const availableLocales = await getPostLocales(slug);
+const { Content } = await render(post);
+
+const path = `/contents/blog/${slug}`;
+const site = Astro.site ?? new URL('https://cihatata.dev');
+const isUntranslated = !post.data.translated;
+const sourceLocale = otherLocale(locale);
+
+const schema = [
+  {
+    '@type': 'BlogPosting',
+    '@id': `${absoluteUrl(localizePath(path, locale), site)}#post`,
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.publishedAt.toISOString(),
+    dateModified: (post.data.updatedAt ?? post.data.publishedAt).toISOString(),
+    inLanguage: locale,
+    keywords: post.data.tags.join(', '),
+    author: { '@id': `${site.origin}/#person` },
+    publisher: { '@id': `${site.origin}/#person` },
+    mainEntityOfPage: absoluteUrl(localizePath(path, locale), site),
+    ...(post.data.heroImage ? { image: absoluteUrl(post.data.heroImage.src, site) } : {}),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: AUTHOR.name,
+        item: absoluteUrl(localizePath('/', locale), site),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: t('contents.title'),
+        item: absoluteUrl(localizePath('/contents', locale), site),
+      },
+      { '@type': 'ListItem', position: 3, name: post.data.title },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  path={path}
+  locale={locale}
+  type="article"
+  image={post.data.heroImage?.src}
+  imageAlt={post.data.heroImageAlt ?? post.data.title}
+  publishedTime={post.data.publishedAt.toISOString()}
+  modifiedTime={(post.data.updatedAt ?? post.data.publishedAt).toISOString()}
+  tags={post.data.tags}
+  noindex={isUntranslated}
+  availableLocales={availableLocales}
+  schema={schema}
+>
+  <article class="animate-rise">
+    <a
+      href={localizePath('/contents', locale)}
+      class="group inline-flex items-center gap-1.5 text-sm text-fg-muted transition-colors hover:text-fg"
+    >
+      <Icon
+        name="arrowLeft"
+        size={14}
+        class="transition-transform duration-300 ease-[var(--ease-glass)] group-hover:-translate-x-0.5"
+      />
+      {t('blog.backToBlog')}
+    </a>
+
+    <header class="mt-6">
+      <h1 class="text-3xl leading-tight font-semibold sm:text-4xl">{post.data.title}</h1>
+
+      <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-fg-subtle">
+        <time datetime={post.data.publishedAt.toISOString()}>
+          {formatDate(post.data.publishedAt, locale)}
+        </time>
+        <span aria-hidden="true">·</span>
+        <span class="inline-flex items-center gap-1.5">
+          <Icon name="clock" size={13} />
+          {t('blog.readingTime', { n: post.readingMinutes })}
+        </span>
+      </div>
+
+      {
+        post.data.tags.length > 0 && (
+          <div class="mt-4 flex flex-wrap gap-2">
+            {post.data.tags.map((tag) => (
+              <TagPill
+                label={tag}
+                href={localizePath(`/contents/tag/${slugify(tag)}`, locale)}
+              />
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    {
+      post.data.heroImage && (
+        <figure class="mt-8">
+          <Image
+            src={post.data.heroImage}
+            alt={post.data.heroImageAlt ?? post.data.title}
+            widths={[480, 768, 1200]}
+            sizes="(min-width: 48rem) 46rem, 100vw"
+            loading="eager"
+            fetchpriority="high"
+            class="w-full rounded-2xl"
+          />
+          {post.data.heroImageCredit && (
+            <figcaption class="mt-3 text-center text-xs text-fg-subtle">
+              {post.data.heroImageCredit}
+            </figcaption>
+          )}
+        </figure>
+      )
+    }
+
+    {
+      isUntranslated ? (
+        <GlassSurface class="mt-10 p-6">
+          <h2 class="text-lg font-semibold">{t('blog.translationTitle')}</h2>
+          <p class="mt-2 text-sm text-fg-muted">{t('blog.translationBody')}</p>
+          <a
+            href={localizePath(path, sourceLocale)}
+            hreflang={sourceLocale}
+            class="group mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent"
+          >
+            {t('blog.translationCta')}
+            <Icon
+              name="arrowRight"
+              size={14}
+              class="transition-transform duration-300 ease-[var(--ease-glass)] group-hover:translate-x-0.5"
+            />
+          </a>
+        </GlassSurface>
+      ) : (
+        <div class="prose mt-10">
+          <Content />
+        </div>
+      )
+    }
+  </article>
+</BaseLayout>
