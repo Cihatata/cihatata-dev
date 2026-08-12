@@ -1,0 +1,52 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Radius = 'pill' | 'soft' | 'default' | 'flush';
+
+interface Props extends HTMLAttributes<'div'> {
+  /** Element to render. Use `a`, `button` or `li` where semantics require it. */
+  as?: 'div' | 'span' | 'section' | 'header' | 'nav' | 'article' | 'aside' | 'li' | 'footer';
+  radius?: Radius;
+  /** Adds hover lift and press feedback. */
+  interactive?: boolean;
+  /** Adds the light sweep on hover. */
+  sheen?: boolean;
+  /** Opts into SVG edge refraction where the browser supports it. */
+  refract?: boolean;
+  /** Heavier blur and a more opaque tint, for surfaces over busy content. */
+  strong?: boolean;
+}
+
+const {
+  as: Tag = 'div',
+  radius = 'default',
+  interactive = false,
+  sheen = false,
+  refract = false,
+  strong = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const radiusClass: Record<Radius, string | null> = {
+  pill: 'glass--pill',
+  soft: 'glass--soft',
+  flush: 'glass--flush',
+  default: null,
+};
+---
+
+<Tag
+  class:list={[
+    'glass',
+    radiusClass[radius],
+    interactive && 'glass--interactive',
+    sheen && 'glass--sheen',
+    refract && 'glass--refract',
+    strong && 'glass--strong',
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</Tag>

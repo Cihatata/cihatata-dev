@@ -1,0 +1,39 @@
+---
+/**
+ * Displacement map used by `.glass--refract`. Rendered once per document; the
+ * turbulence bends what is behind the glass edge just enough to read as a
+ * refracting surface rather than a flat blur.
+ */
+---
+
+<svg class="glass-filters" aria-hidden="true" focusable="false" width="0" height="0">
+  <defs>
+    <filter id="glass-refraction" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.008 0.014"
+        numOctaves="2"
+        seed="7"
+        result="noise"
+      />
+      <feGaussianBlur in="noise" stdDeviation="2.4" result="softNoise" />
+      <feDisplacementMap
+        in="SourceGraphic"
+        in2="softNoise"
+        scale="14"
+        xChannelSelector="R"
+        yChannelSelector="G"
+      />
+    </filter>
+  </defs>
+</svg>
+
+<style>
+  .glass-filters {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+</style>
