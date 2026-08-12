@@ -1,0 +1,122 @@
+---
+import { AUTHOR, X_HANDLE } from '~/config/site';
+import { OG_LOCALE } from '~/i18n/ui';
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  absoluteUrl,
+  localizePath,
+  otherLocale,
+  type Locale,
+} from '~/i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Locale-independent path, e.g. `/contents/blog/css-cascade`. */
+  path: string;
+  locale: Locale;
+  type?: 'website' | 'article' | 'profile';
+  image?: string;
+  imageAlt?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  tags?: readonly string[];
+  noindex?: boolean;
+  /** Locales this page actually exists in. */
+  availableLocales?: readonly Locale[];
+}
+
+const {
+  title,
+  description,
+  path,
+  locale,
+  type = 'website',
+  image = '/og-default.png',
+  imageAlt = `${AUTHOR.name} — ${AUTHOR.jobTitle}`,
+  publishedTime,
+  modifiedTime,
+  tags,
+  noindex = false,
+  availableLocales = LOCALES,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://cihatata.dev');
+const canonical = absoluteUrl(localizePath(path, locale), site);
+const imageUrl = absoluteUrl(image, site);
+const pageTitle = path === '/' ? `${AUTHOR.name} — ${AUTHOR.jobTitle}` : `${title} · ${AUTHOR.name}`;
+
+const alternates = availableLocales.map((code) => ({
+  code,
+  href: absoluteUrl(localizePath(path, code), site),
+}));
+const xDefault = alternates.find((entry) => entry.code === DEFAULT_LOCALE) ?? alternates[0];
+const alternateOgLocales = availableLocales.filter((code) => code !== locale);
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+{
+  noindex ? (
+    <meta name="robots" content="noindex, follow" />
+  ) : (
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+  )
+}
+
+{
+  alternates.map((entry) => (
+    <link rel="alternate" hreflang={entry.code} href={entry.href} />
+  ))
+}
+{xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
+
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={AUTHOR.name} />
+<meta property="og:locale" content={OG_LOCALE[locale]} />
+{
+  alternateOgLocales.map((code) => (
+    <meta property="og:locale:alternate" content={OG_LOCALE[code]} />
+  ))
+}
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+{publishedTime && <meta property="article:published_time" content={publishedTime} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+{type === 'article' && <meta property="article:author" content={AUTHOR.name} />}
+{tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={X_HANDLE} />
+<meta name="twitter:creator" content={X_HANDLE} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+<meta name="author" content={AUTHOR.name} />
+
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={`${AUTHOR.name} — ${locale.toUpperCase()}`}
+  href={absoluteUrl(localizePath('/rss.xml', locale), site)}
+/>
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={`${AUTHOR.name} — ${otherLocale(locale).toUpperCase()}`}
+  href={absoluteUrl(localizePath('/rss.xml', otherLocale(locale)), site)}
+/>
