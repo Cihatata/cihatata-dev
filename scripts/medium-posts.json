@@ -1,0 +1,117 @@
+{
+  "$comment": "Curated metadata for the posts imported from Medium. Keyed by the Medium post id at the end of each story URL. Tags are hand-picked per language; the importer merges nothing automatically so this file stays the single source of truth.",
+  "embeds": {
+    "$comment": "Medium's /media/<id>/href redirector returns 403 to non-browser clients, so embeds resolved manually are pinned here and inlined during the import.",
+    "4a4f023335ad39b391eddf0bc347aa09": {
+      "source": "https://gist.github.com/jscodelover/5781b1fc4dbe99bb773c42f2c6f20662#file-important_keyword-css",
+      "language": "css",
+      "code": ".btn{\n  padding: 10px 20px;\n  font-size: 20px;\n  background-color: #000 !important;\n}\n\n.para .login .btn{\n  background-color: #fff;\n}"
+    }
+  },
+  "posts": {
+    "62dc7526ef30": {
+      "slug": "bebekle-ilk-yurt-disi-seyahat-ozbekistan",
+      "tr": {
+        "title": "11 Aylık Bebeğimizle İlk Yurt Dışı Seyahatimiz: Özbekistan",
+        "description": "11 aylık bebeğimizle ilk yurt dışı seyahatimiz: Özbekistan'ı neden seçtik, uçuşlar ve konaklama nasıl geçti, neleri farklı yapardım?",
+        "tags": ["seyahat", "aile", "özbekistan"]
+      },
+      "en": {
+        "title": "Our First Trip Abroad With an 11-Month-Old: Uzbekistan",
+        "description": "What travelling abroad with an 11-month-old is really like: why we picked Uzbekistan, how the flights went, and what I would pack differently.",
+        "tags": ["travel", "family", "uzbekistan"]
+      }
+    },
+    "164a6dc72985": {
+      "slug": "yazilim-takimlarinda-onboarding",
+      "tr": {
+        "title": "Yazılım Takımlarında Onboarding",
+        "description": "Sık iş değiştiren biri olarak öğrendiklerim: yeni katılan biri adaptasyonu nasıl hızlandırır, takım ilk günden önce neleri hazır etmeli?",
+        "tags": ["onboarding", "takım", "yazılım"]
+      },
+      "en": {
+        "title": "Onboarding in Software Teams",
+        "description": "Notes from repeatedly being the new person on a team: what helps a newcomer ramp up fast, and what the team should have ready before day one.",
+        "tags": ["onboarding", "teams", "software"]
+      }
+    },
+    "1a9580c9af42": {
+      "slug": "acik-kaynakta-firsatlar-ve-oduller-checkmate",
+      "tr": {
+        "title": "Açık Kaynakta Fırsatlar ve Ödüller: Checkmate Katkı Hikayem",
+        "description": "Checkmate projesine verdiğim katkının ödüle dönüşme hikayesi ve açık kaynağa ilk katkınızı yapmak için izleyebileceğiniz pratik bir yol.",
+        "tags": ["açık kaynak", "i18n", "yazılım"]
+      },
+      "en": {
+        "title": "Opportunities and Rewards in Open Source: My Checkmate Contribution Story",
+        "description": "How contributing to the open-source project Checkmate turned into a real reward, plus a practical path for making your own first contribution.",
+        "tags": ["open source", "i18n", "software"]
+      }
+    },
+    "366ea3b697e6": {
+      "slug": "2023-degerlendirmesi-startup-seruveni",
+      "tr": {
+        "title": "2023 Değerlendirmesi | Startup Serüveni",
+        "description": "2023'e dönüp bakıyorum: startup serüveni, işimde değişenler ve yıl başında koyduğum hedeflerin ne kadarını tutturabildiğim.",
+        "tags": ["yıllık değerlendirme", "startup", "kariyer"]
+      },
+      "en": {
+        "title": "2023 in Review: The Startup Chapter",
+        "description": "Looking back at 2023: joining a startup, what changed in my day-to-day work, and how the year measured up against the goals I had set.",
+        "tags": ["yearly review", "startup", "career"]
+      }
+    },
+    "2374489ac058": {
+      "slug": "2022-degerlendirmesi-tek-eksik-sayginlik",
+      "tr": {
+        "title": "2022 Değerlendirmesi | Tek eksik saygınlık",
+        "description": "2022'ye dönüp bakıyorum: iş, hayat ve öğrendiklerim. Peşinden koştuğum tek şey dışında her şeyin yolunda gittiği bir yılın muhasebesi.",
+        "tags": ["yıllık değerlendirme", "kariyer", "hayat"]
+      },
+      "en": {
+        "title": "2022 in Review: Everything but Recognition",
+        "description": "Looking back at 2022: work, life and lessons learned in a year where everything went well except the one thing I was chasing.",
+        "tags": ["yearly review", "career", "life"]
+      }
+    },
+    "cee344152967": {
+      "slug": "2021-degerlendirmesi-hardskills-softskills",
+      "tr": {
+        "title": "2021'de neler yaptım? | Hardskills'den çok Softskills",
+        "description": "2021'e dönüp bakıyorum: teknik becerilerden çok iletişim, ekip çalışması ve öğrenme alışkanlıklarına yatırım yaptığım bir yılın özeti.",
+        "tags": ["yıllık değerlendirme", "soft skills", "kariyer"]
+      },
+      "en": {
+        "title": "What I Did in 2021: More Soft Skills Than Hard Skills",
+        "description": "Looking back at 2021: the year I invested more in communication, teamwork and learning habits than in raw technical skills.",
+        "tags": ["yearly review", "soft skills", "career"]
+      }
+    },
+    "110c777b8367": {
+      "slug": "frontende-nereden-baslamaliyim-bir-yil-sonra",
+      "tr": {
+        "title": "\"Frontend'e nereden başlamalıyım?\" dedikten sonra 1 yıl geçti",
+        "description": "Frontend yolculuğumun ilk yılı: izlediğim roadmap, işe yarayan kaynaklar ve baştan başlasam atlayacağım adımlar.",
+        "tags": ["frontend", "yıllık değerlendirme", "öğrenme"]
+      },
+      "en": {
+        "title": "One Year After Asking \"Where Do I Start With Frontend?\"",
+        "description": "The first year of my frontend journey: the roadmap I followed, the resources that actually helped, and the steps I would skip today.",
+        "tags": ["frontend", "yearly review", "learning"]
+      }
+    },
+    "5a1afeda4f7c": {
+      "slug": "css-cascade-nedir",
+      "tr": {
+        "title": "CSS Cascade Nedir?",
+        "description": "Tarayıcı hangi CSS kuralının kazanacağına nasıl karar verir? Cascade algoritmasını kaynak, özgüllük ve kalıtım örnekleriyle anlatıyorum.",
+        "tags": ["css", "tarayıcılar", "frontend"]
+      },
+      "en": {
+        "title": "What Is the CSS Cascade?",
+        "description": "How browsers decide which CSS rule wins: origin, specificity and inheritance in the cascade algorithm, explained with worked examples.",
+        "tags": ["css", "browsers", "frontend"]
+      }
+    }
+  }
+}
