@@ -4,8 +4,8 @@ heading: 'Merhaba!'
 description: 'Ankara’da yaşayan bir Software Engineer. Kendimden biraz daha bahsedeyim.'
 ---
 
-Ben Cihat ATA. Software Engineer olarak çalışıyorum, Ankara'da yaşıyorum. Gazi Üniversitesi Bilgisayar Mühendisliği mezunuyum. 5 yıldır sektörde Software Developer olarak çalışıyorum. Ağırlıklı olarak web teknolojileriyle ilgileniyor, 0'dan 1'e ürünler üretmeyi seviyor ve öğrendiklerimi paylaşmaya çalışıyorum. Arada bir de fotoğraf çekiyorum.
+Ben Cihat ATA. Ankara'da yaşıyorum. 6 yıldır sektörde Software Developer olarak çalışıyorum. Bir çocuk babasıyım. Ağırlıklı olarak web teknolojileriyle, özellikle frontend ile ilgileniyorum; hem 0'dan 1'e ürünler hem de günlük milyonlarca request alan ürünler üzerinde çalıştım. Öğrendiklerimi ve deneyimlerimi paylaşmaya çalışıyorum. Amatör olarak da fotoğraf çekiyorum. Home barista olarak evde kahve demliyorum.
 
-Yeni yerler keşfetmeyi seviyorum. Zamanım olduğunda eşimle, arkadaşlarımla veya ailemle görmediğim yerlere gitmeye çalışıyorum. Çoğu yazılımcı gibi ben de kahve ile uğraşıyorum.
+Yeni yerler keşfetmeyi seviyorum. Zamanım olduğunda arkadaşlarımla veya ailemle görmediğim yerlere gitmeye çalışıyorum.
 
 Takım sporlarını yapmayı ve izlemeyi seviyorum. Futbolla daha çok ilgileniyorum. Şehrimin takımını destekliyorum, Eskişehirsporluyum.

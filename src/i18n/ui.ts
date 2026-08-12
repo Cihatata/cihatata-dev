@@ -29,7 +29,7 @@ export const ui = {
     'nav.label': 'Main navigation',
 
     'hero.bio':
-      "I'm a Software Engineer based in Ankara. I mostly work with web technologies, enjoy building products from 0 to 1, and like sharing what I learn along the way. I also take photographs from time to time.",
+      "I'm a Software Engineer based in Ankara. I mostly work with web technologies, mainly frontend, enjoy building products from 0 to 1, and like sharing what I learn along the way. I also take photographs from time to time.",
     'hero.findMeOn': 'Find me on',
     'hero.avatarAlt': 'Illustrated portrait of Cihat ATA',
 
@@ -112,7 +112,7 @@ export const ui = {
     'nav.label': 'Ana menü',
 
     'hero.bio':
-      'Software Engineer olarak çalışıyorum, Ankara’da yaşıyorum. Ağırlıklı olarak web teknolojileriyle ilgileniyor, 0’dan 1’e ürünler üretmeyi seviyor ve öğrendiklerimi paylaşmaya çalışıyorum. Arada bir de fotoğraf çekiyorum.',
+      'Software Engineer olarak çalışıyorum, Ankara’da yaşıyorum. Ağırlıklı olarak web teknolojileriyle, özellikle frontend ile ilgileniyorum, 0’dan 1’e ürünler üretmeyi seviyor ve öğrendiklerimi paylaşmaya çalışıyorum. Arada bir de fotoğraf çekiyorum.',
     'hero.findMeOn': 'Bana ulaşın',
     'hero.avatarAlt': 'Cihat ATA’nın illüstrasyon portresi',
 
