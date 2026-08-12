@@ -4,7 +4,6 @@ import ipadPro from '~/assets/tools/ipad-pro-m4.png';
 import lgUltrafine from '~/assets/tools/lg-ultrafine-ergo.png';
 import macbookAir from '~/assets/tools/macbook-air-m1.png';
 import magicKeyboard from '~/assets/tools/magic-keyboard.png';
-import monitorRiser from '~/assets/tools/monitor-riser.png';
 import mxVertical from '~/assets/tools/mx-vertical.jpg';
 import nuphyAir from '~/assets/tools/nuphy-air-75.png';
 import philipsHue from '~/assets/tools/philips-hue-play.png';
@@ -64,13 +63,6 @@ export const CURRENT_TOOLS: Tool[] = [
     image: mxVertical,
     tr: { name: 'MX Vertical Mouse' },
     en: { name: 'MX Vertical mouse' },
-  },
-  {
-    id: 'monitor-riser',
-    brand: 'Faguswood',
-    image: monitorRiser,
-    tr: { name: 'Ekran yükseltici, Kayın' },
-    en: { name: 'Monitor riser, beech' },
   },
   {
     id: 'standing-desk',

@@ -9,21 +9,21 @@ mediumUrl: 'https://cihatata.medium.com/css-cascade-nedir-5a1afeda4f7c'
 
 ## CSS Specificity Nedir ?
 
-![By Una Kravets](../../../assets/blog/css-cascade-nedir/01.jpg)
+By Una Kravets
 
-_By Una Kravets_
+*By Una Kravets*
 
 Bu yazıda HTML elementlerine stil özellikleri eklenirken uygulanan Cascade algoritması üzerinde duracağım. Tarayıcımız hangi kaynaklardan style dosyaları çekiyor? Bir element için eşleşen birden fazla selector olduğunda hangi selector’un uygulanacağına nasıl karar veriyor ? gibi soruları örnekler vererek yanıtlamaya çalışacağım.
 
 Basit olarak bir CSS Rule’nda bulunan CSS terimlerini hızlıca inceleyelim.
 
-![By Manisha Basra](../../../assets/blog/css-cascade-nedir/02.jpg)
+By Manisha Basra
 
-_By [Manisha Basra](https://medium.com/@jscodelover?source=post_page-----aca7152b4e7e----------------------)_
+*By [Manisha Basra](https://medium.com/@jscodelover?source=post_page-----aca7152b4e7e----------------------)*
 
 Şimdi yazımıza geçebiliriz.
 
-Bir proje üzerinde çalışıyorsunuz ve bir elemente uygulanması gereken CSS Rule’un çalışmadığını görüyorsunuz. Genellikle sorun aynı elemente birden fazla _rule_ tanımlanması ile oluşuyor. Bir element için birden fazla _rules_ var iken CSS neye göre bir _rule_ seçiyor?
+Bir proje üzerinde çalışıyorsunuz ve bir elemente uygulanması gereken CSS Rule’un çalışmadığını görüyorsunuz. Genellikle sorun aynı elemente birden fazla *rule* tanımlanması ile oluşuyor. Bir element için birden fazla *rules* var iken CSS neye göre bir *rule* seçiyor?
 
 **Cascade,** belirli bir element için birden fazla kural olduğunda farklı CSS sayfalarını birleştirir ve farklı CSS declarations arasında ‘conflict çözme’ işlemlerini yapar.
 
@@ -70,9 +70,9 @@ Bir proje üzerinde çalışıyorsunuz ve bir elemente uygulanması gereken CSS 
 
 ### CASCADE algoritması Conflict’i nasıl çözer?
 
-![](../../../assets/blog/css-cascade-nedir/03.png)
 
-Tarayıcınız yüklenen HTML sayfasını ilk olarak parse eder ve ondan bir DOM ağacı oluşturur. CSS selector, bu ağaçtaki elementlerle eşleşip onlara stil özelliklerini verir. Eğer bir element birden fazla _rule_ ile eşleşiyorsa sırasıyla yukarıdaki görseldeki işlemler başlar. Bu işlemlerin hepsinin bir ağırlık puanı var gibi düşünebiliriz. Ağırlık puanı en yüksek olan _rule_ elemente atanacaktır. Ağırlık puanı soldan sağa ve yukarıdan aşağı azalır. Yukarıdaki 3 aşamayı örnekler ile inceleyelim.
+
+Tarayıcınız yüklenen HTML sayfasını ilk olarak parse eder ve ondan bir DOM ağacı oluşturur. CSS selector, bu ağaçtaki elementlerle eşleşip onlara stil özelliklerini verir. Eğer bir element birden fazla *rule* ile eşleşiyorsa sırasıyla yukarıdaki görseldeki işlemler başlar. Bu işlemlerin hepsinin bir ağırlık puanı var gibi düşünebiliriz. Ağırlık puanı en yüksek olan *rule* elemente atanacaktır. Ağırlık puanı soldan sağa ve yukarıdan aşağı azalır. Yukarıdaki 3 aşamayı örnekler ile inceleyelim.
 
 **Origin & Importance**
 
@@ -80,13 +80,13 @@ Bir CSS declaration’da importance, property sonuna eklenen !important ifadesiy
 
 Burada Origin’den kastımız yukarıda açıkladığımız stylesheet kaynaklarıdır.(User-agent stylesheet,User stylesheet,Author stylesheet). Bu kaynakların da öncelikleri vardır. Bu kaynak önceliklerine ve Importance dikkate alındığında aşağıdaki liste ortaya çıkar. Önceliği yüksekten düşüğe doğru gitmektedir.
 
-1.  User-Agent & !important
-2.  User & !important
-3.  Author & !important
-4.  CSS Animations, @keyframes
-5.  Author, normal weight
-6.  User, normal weight
-7.  User agent, normal weight
+1. User-Agent & !important
+2. User & !important
+3. Author & !important
+4. CSS Animations, @keyframes
+5. Author, normal weight
+6. User, normal weight
+7. User agent, normal weight
 
 Bir input elementi oluşturulduğunda tarayıcıdan gelen style dosyası geçerli olacaktır. Ancak seninput elementine style tag’i ekleyip property’lerini yazdığında bu tag içerisindeki style geçerli olacaktır.
 
@@ -102,28 +102,28 @@ Bir input elementi oluşturulduğunda tarayıcıdan gelen style dosyası geçerl
 }
 ```
 
-[https://gist.github.com/jscodelover/5781b1fc4dbe99bb773c42f2c6f20662#file-important\_keyword-css](https://gist.github.com/jscodelover/5781b1fc4dbe99bb773c42f2c6f20662#file-important_keyword-css)
+[https://gist.github.com/jscodelover/5781b1fc4dbe99bb773c42f2c6f20662#file-importantkeyword-css](https://gist.github.com/jscodelover/5781b1fc4dbe99bb773c42f2c6f20662#file-important_keyword-css)
 
-Bu örnektespecificity (Aşağıda açıklayacağım bu kavramı) olarak alttaki declaration geçerli olması gerekirken !importantkeyword’ü kullanıldığı için buton rengini üstteki _rule_ belirleyecektir.
+Bu örnektespecificity (Aşağıda açıklayacağım bu kavramı) olarak alttaki declaration geçerli olması gerekirken !importantkeyword’ü kullanıldığı için buton rengini üstteki *rule* belirleyecektir.
 
 **Specificity**
 
-Bizim Origin & importance önceliklerimiz iki _rule_ içinde aynı ise bir sonraki aşama olan specificity ‘e bakarız. Specificity’i türkçeye spesifik olarak çevirebiliriz. Bizim tarayıcımız CSS declaration’a bakarak en spesifik selector’u seçecek. Specificity değerlendirilirken CSS selector sayısı ve Selector tiplerine bakılır.
+Bizim Origin & importance önceliklerimiz iki *rule* içinde aynı ise bir sonraki aşama olan specificity ‘e bakarız. Specificity’i türkçeye spesifik olarak çevirebiliriz. Bizim tarayıcımız CSS declaration’a bakarak en spesifik selector’u seçecek. Specificity değerlendirilirken CSS selector sayısı ve Selector tiplerine bakılır.
 
-1.  **Inline styles** (highest specificity): Bir elemente doğrudan style attribute ile stil verilir. : <h1 style=”color: #ffffff;”>.
-2.  **IDs**: Sayfadaki elementler için unique bir tanımlayıcıdır.Örneğin#navbar.
-3.  **Classes, attributes, and pseudo-classes**: Bu kategori .classes, \[attributes\] ve pseudo-classes(:hover, :focus gibi) içerir.
-4.  **Elements and pseudo-elements** (lowest specificity): Bu kategori element isimlerini ve pseudo-elements içerir. Örneğin h1, div, ::before ve::after gibi.
+1. **Inline styles** (highest specificity): Bir elemente doğrudan style attribute ile stil verilir. : <h1 style=”color: #ffffff;”>.
+2. **IDs**: Sayfadaki elementler için unique bir tanımlayıcıdır.Örneğin#navbar.
+3. **Classes, attributes, and pseudo-classes**: Bu kategori .classes, attributes ve pseudo-classes(:hover, :focus gibi) içerir.
+4. **Elements and pseudo-elements** (lowest specificity): Bu kategori element isimlerini ve pseudo-elements içerir. Örneğin h1, div, ::before ve::after gibi.
 
 Tarayıcının Specificity nasıl hesapladığına bakalım. Farklı selector türlerine, puan cinsinden bir değer verilir. Bu puanlar karşılaştırılarak en yüksek puana sahip selector Specificity olarak belirlenir.
 
-![](../../../assets/blog/css-cascade-nedir/04.png)
+
 
 Specificity hesaplarken yukarıdaki puanları kullanacağız.
 
-![Example Calculation](../../../assets/blog/css-cascade-nedir/05.jpg)
+Example Calculation
 
-_Example Calculation_
+*Example Calculation*
 
 ```css
 /* specificity: 0101 */
@@ -207,9 +207,9 @@ li {
 </div>
 ```
 
-Specificity puanlarımız belli, şimdi sayfamızın çıktısında neler olacağını tahmin edelim. <a> tagında içerisindeki metnin arka planı mavi renkte olacak. Metnin rengi beyaz olacak çünkü en spesifik selector’ler bunlar. Mouse Two yazısının üzerine getirdiğimizde de border oluşacak. Aşağıda çıktımız görünmektedir.
+Specificity puanlarımız belli, şimdi sayfamızın çıktısında neler olacağını tahmin edelim. `<a>` tagında içerisindeki metnin arka planı mavi renkte olacak. Metnin rengi beyaz olacak çünkü en spesifik selector’ler bunlar. Mouse Two yazısının üzerine getirdiğimizde de border oluşacak. Aşağıda çıktımız görünmektedir.
 
-![](../../../assets/blog/css-cascade-nedir/06.jpg)
+
 
 Elementimiz ile eşleşecek en spesifik selector bu şekilde seçilir.
 
@@ -217,7 +217,7 @@ Elementimiz ile eşleşecek en spesifik selector bu şekilde seçilir.
 
 Eğer senin bütün selector’lerin aynı specificity değerine sahipse. En son declaration geçerli olacaktır.
 
-![](../../../assets/blog/css-cascade-nedir/07.jpg)
+
 
 Bu işlemlerin ardından elementlerimize style özellikleri veriliyor. CSS Cascading algoritması bu şekilde çalışıyor. Umarım yazım sizin için faydalı olmuştur.
 
@@ -225,6 +225,7 @@ Twitter: cihatata
 
 Yazımı yazarken yararlandığım kaynakların listesi
 
-1.  [https://developer.mozilla.org/en-US/docs/Learn/CSS/Building\_blocks/Cascade\_and\_inheritance](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_and_inheritance)
-2.  [https://blog.logrocket.com/how-css-works-understanding-the-cascade-d181cd89a4d8/](https://blog.logrocket.com/how-css-works-understanding-the-cascade-d181cd89a4d8/)
-3.  [https://medium.com/better-programming/how-does-css-works-behind-the-scenes-aca7152b4e7e](https://medium.com/better-programming/how-does-css-works-behind-the-scenes-aca7152b4e7e)
+1. [https://developer.mozilla.org/en-US/docs/Learn/CSS/Buildingblocks/Cascadeandinheritance](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_and_inheritance)
+2. [https://blog.logrocket.com/how-css-works-understanding-the-cascade-d181cd89a4d8/](https://blog.logrocket.com/how-css-works-understanding-the-cascade-d181cd89a4d8/)
+3. [https://medium.com/better-programming/how-does-css-works-behind-the-scenes-aca7152b4e7e](https://medium.com/better-programming/how-does-css-works-behind-the-scenes-aca7152b4e7e)
+
