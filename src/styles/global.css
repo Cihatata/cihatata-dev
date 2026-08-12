@@ -169,43 +169,6 @@
   padding-inline: 1.25rem;
 }
 
-/* Ambient light blobs that give the glass surfaces something to refract. */
-.ambient-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.ambient-canvas::before,
-.ambient-canvas::after {
-  content: '';
-  position: absolute;
-  width: 42rem;
-  height: 42rem;
-  border-radius: 9999px;
-  filter: blur(90px);
-  opacity: 0.5;
-}
-
-.ambient-canvas::before {
-  top: -14rem;
-  left: -10rem;
-  background: radial-gradient(circle, oklch(78% 0.13 255 / 0.5), transparent 68%);
-}
-
-.ambient-canvas::after {
-  top: 22rem;
-  right: -14rem;
-  background: radial-gradient(circle, oklch(80% 0.11 330 / 0.42), transparent 68%);
-}
-
-.dark .ambient-canvas::before,
-.dark .ambient-canvas::after {
-  opacity: 0.3;
-}
-
 /* ---------------------------------------------------------------------------
    Entrance animation
 --------------------------------------------------------------------------- */
