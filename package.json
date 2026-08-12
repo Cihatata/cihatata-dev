@@ -1,0 +1,42 @@
+{
+  "name": "cihatata-dev",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@10.19.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "wrangler dev",
+    "astro": "astro",
+    "check": "astro check",
+    "typecheck": "astro check",
+    "sync": "astro sync",
+    "deploy": "astro build && wrangler deploy",
+    "fetch:unsplash": "node scripts/fetch-unsplash.mjs",
+    "migrate:medium": "node scripts/migrate-medium.mjs",
+    "fetch:tools": "node scripts/fetch-tools-assets.mjs"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "sharp", "workerd"]
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "14.2.1",
+    "@astrojs/rss": "4.0.19",
+    "@astrojs/sitemap": "3.7.3",
+    "astro": "7.2.1",
+    "tailwindcss": "4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@tailwindcss/vite": "4.3.3",
+    "sharp": "0.35.3",
+    "turndown": "7.2.4",
+    "typescript": "5.9.3",
+    "wrangler": "4.121.0"
+  }
+}
