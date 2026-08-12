@@ -143,6 +143,31 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Theme toggle
+   Both icons share one grid cell and cross-fade with a quarter turn. These
+   rules are global because the icons are rendered by a child component.
+--------------------------------------------------------------------------- */
+
+.theme-icon {
+  grid-area: 1 / 1;
+  transition:
+    opacity var(--duration-base) var(--ease-glass),
+    transform var(--duration-base) var(--ease-glass);
+}
+
+html:not(.dark) .theme-icon--moon,
+html.dark .theme-icon--sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+}
+
+html.dark .theme-icon--moon,
+html:not(.dark) .theme-icon--sun {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------------------------------------------------------------------------
    Navigation
 --------------------------------------------------------------------------- */
 

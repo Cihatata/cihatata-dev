@@ -25,31 +25,6 @@ const t = useTranslations(locale);
   <Icon name="moon" size={16} class="theme-icon theme-icon--moon" />
 </button>
 
-<style>
-  button {
-    position: relative;
-  }
-
-  .theme-icon {
-    grid-area: 1 / 1;
-    transition:
-      opacity var(--duration-base) var(--ease-glass),
-      transform var(--duration-base) var(--ease-glass);
-  }
-
-  :global(html:not(.dark)) .theme-icon--moon,
-  :global(html.dark) .theme-icon--sun {
-    opacity: 0;
-    transform: rotate(-90deg) scale(0.6);
-  }
-
-  :global(html.dark) .theme-icon--moon,
-  :global(html:not(.dark)) .theme-icon--sun {
-    opacity: 1;
-    transform: none;
-  }
-</style>
-
 <script>
   const bind = () => {
     document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
