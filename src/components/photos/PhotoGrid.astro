@@ -1,0 +1,52 @@
+---
+import PhotoCard from './PhotoCard.astro';
+import EmptyState from '~/components/ui/EmptyState.astro';
+import type { UnsplashPhoto } from '~/lib/photos';
+import { useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  photos: UnsplashPhoto[];
+  locale: Locale;
+  /**
+   * `masonry` keeps every original crop for the full gallery; `tiles` squares
+   * everything off so teaser rows stay compact.
+   */
+  layout?: 'masonry' | 'tiles';
+  /** Number of leading photos loaded eagerly. */
+  eagerCount?: number;
+}
+
+const { photos, locale, layout = 'masonry', eagerCount = 0 } = Astro.props;
+const t = useTranslations(locale);
+
+const sizes =
+  layout === 'masonry'
+    ? '(min-width: 48rem) 15rem, (min-width: 30rem) 45vw, 100vw'
+    : '(min-width: 40rem) 22rem, 50vw';
+---
+
+{
+  photos.length === 0 ? (
+    <EmptyState message={t('photos.empty')} icon="camera" />
+  ) : layout === 'masonry' ? (
+    <div class="columns-2 gap-3 sm:columns-3 sm:gap-4">
+      {photos.map((photo, index) => (
+        <div class="mb-3 break-inside-avoid sm:mb-4">
+          <PhotoCard photo={photo} locale={locale} sizes={sizes} eager={index < eagerCount} />
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div class="grid grid-cols-2 gap-3 sm:gap-4">
+      {photos.map((photo, index) => (
+        <PhotoCard
+          photo={photo}
+          locale={locale}
+          sizes={sizes}
+          aspect="square"
+          eager={index < eagerCount}
+        />
+      ))}
+    </div>
+  )
+}

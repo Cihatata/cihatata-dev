@@ -1,0 +1,45 @@
+---
+import ContentTabs from '~/components/contents/ContentTabs.astro';
+import PhotoGrid from '~/components/photos/PhotoGrid.astro';
+import Icon from '~/components/ui/Icon.astro';
+import PageHeader from '~/components/ui/PageHeader.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getPhotos, profile, profileLink } from '~/lib/photos';
+import { useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const photos = getPhotos();
+---
+
+<BaseLayout
+  title={t('contents.photos')}
+  description={t('contents.photosDescription')}
+  path="/contents/photos"
+  locale={locale}
+>
+  <PageHeader
+    eyebrow={t('contents.title')}
+    title={t('contents.photos')}
+    description={t('contents.photosDescription')}
+  >
+    <a
+      href={profileLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-4 inline-flex items-center gap-1.5 text-sm text-fg-muted transition-colors hover:text-fg"
+    >
+      <Icon name="unsplash" size={13} />
+      unsplash.com/@{profile.username}
+      <Icon name="external" size={12} />
+    </a>
+  </PageHeader>
+
+  <ContentTabs locale={locale} active="photos" />
+
+  <PhotoGrid photos={photos} locale={locale} layout="masonry" eagerCount={3} />
+</BaseLayout>

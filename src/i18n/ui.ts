@@ -70,6 +70,7 @@ export const ui = {
     'photos.by': 'Photo by',
     'photos.on': 'on',
     'photos.empty': 'No photos yet.',
+    'photos.fallbackAlt': 'Photograph by Cihat ATA',
 
     'dailies.title': 'Dailies',
     'dailies.description':
@@ -155,6 +156,7 @@ export const ui = {
     'photos.by': 'Fotoğraf:',
     'photos.on': '·',
     'photos.empty': 'Henüz fotoğraf yok.',
+    'photos.fallbackAlt': 'Cihat ATA tarafından çekilmiş fotoğraf',
 
     'dailies.title': 'Günlükler',
     'dailies.description':

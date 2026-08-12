@@ -1,0 +1,33 @@
+---
+import ContentTabs from '~/components/contents/ContentTabs.astro';
+import VideoList from '~/components/videos/VideoList.astro';
+import PageHeader from '~/components/ui/PageHeader.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getVideos } from '~/data/videos';
+import { useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const videos = getVideos();
+---
+
+<BaseLayout
+  title={t('contents.videos')}
+  description={t('contents.videosDescription')}
+  path="/contents/videos"
+  locale={locale}
+>
+  <PageHeader
+    eyebrow={t('contents.title')}
+    title={t('contents.videos')}
+    description={t('contents.videosDescription')}
+  />
+
+  <ContentTabs locale={locale} active="videos" />
+
+  <VideoList videos={videos} locale={locale} />
+</BaseLayout>
