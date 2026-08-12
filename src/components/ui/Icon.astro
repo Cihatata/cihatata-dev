@@ -1,5 +1,5 @@
 ---
-import { ICONS, type IconName } from './icons';
+import { ICONS, type IconDefinition, type IconName } from './icons';
 
 interface Props {
   name: IconName;
@@ -10,7 +10,9 @@ interface Props {
 }
 
 const { name, size = 20, class: className, label } = Astro.props;
-const icon = ICONS[name];
+// Widened on purpose: the literal `as const` map only carries `filled` on the
+// brand marks, so the union would not expose the property at all.
+const icon: IconDefinition = ICONS[name];
 ---
 
 <svg

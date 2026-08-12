@@ -1,5 +1,6 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
 /**
  * Posts live at `src/content/blog/<locale>/<slug>.md`, so the generated entry
@@ -17,7 +18,7 @@ const blog = defineCollection({
       heroImage: image().optional(),
       heroImageAlt: z.string().optional(),
       heroImageCredit: z.string().optional(),
-      mediumUrl: z.string().url().optional(),
+      mediumUrl: z.url().optional(),
       /** English imports start untranslated and are hidden from search engines. */
       translated: z.boolean().default(true),
       draft: z.boolean().default(false),

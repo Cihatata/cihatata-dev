@@ -1,4 +1,4 @@
-type IconDefinition = {
+export type IconDefinition = {
   body: string;
   /** Brand marks are solid shapes; UI icons are drawn with strokes. */
   filled?: boolean;

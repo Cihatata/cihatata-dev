@@ -12,15 +12,17 @@ export type SitemapRoute = {
   priority?: number;
 };
 
-const STATIC_ROUTES: SitemapRoute[] = [
-  { path: '/', changeFrequency: 'weekly', priority: 1 },
-  { path: '/contents', changeFrequency: 'weekly', priority: 0.9 },
-  { path: '/contents/videos', changeFrequency: 'monthly', priority: 0.6 },
-  { path: '/contents/photos', changeFrequency: 'weekly', priority: 0.7 },
-  { path: '/dailies', changeFrequency: 'monthly', priority: 0.4 },
-  { path: '/tools', changeFrequency: 'monthly', priority: 0.7 },
-  { path: '/about', changeFrequency: 'yearly', priority: 0.8 },
-].map((route) => ({ ...route, locales: [...LOCALES] }));
+const STATIC_ROUTES: SitemapRoute[] = (
+  [
+    { path: '/', changeFrequency: 'weekly', priority: 1 },
+    { path: '/contents', changeFrequency: 'weekly', priority: 0.9 },
+    { path: '/contents/videos', changeFrequency: 'monthly', priority: 0.6 },
+    { path: '/contents/photos', changeFrequency: 'weekly', priority: 0.7 },
+    { path: '/dailies', changeFrequency: 'monthly', priority: 0.4 },
+    { path: '/tools', changeFrequency: 'monthly', priority: 0.7 },
+    { path: '/about', changeFrequency: 'yearly', priority: 0.8 },
+  ] satisfies Omit<SitemapRoute, 'locales'>[]
+).map((route) => ({ ...route, locales: [...LOCALES] }));
 
 /**
  * Every indexable URL on the site. Built by walking the content collections so
