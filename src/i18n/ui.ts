@@ -48,8 +48,6 @@ export const ui = {
     'contents.videos': 'Videos',
     'contents.photos': 'Photos',
     'contents.blogsDescription': 'Long-form writing about software, teams and life.',
-    'contents.videosDescription': 'Talks and recordings.',
-    'contents.photosDescription': 'A selection of my photography, published on Unsplash.',
 
     'blog.title': 'Blog',
     'blog.description': 'Writing about software engineering, JavaScript, teams and life.',
@@ -133,8 +131,6 @@ export const ui = {
     'contents.videos': 'Videolar',
     'contents.photos': 'Fotoğraflar',
     'contents.blogsDescription': 'Yazılım, takımlar ve hayat üzerine uzun yazılar.',
-    'contents.videosDescription': 'Konuşmalar ve kayıtlar.',
-    'contents.photosDescription': 'Unsplash’te yayımladığım fotoğraflardan bir seçki.',
 
     'blog.title': 'Blog',
     'blog.description':

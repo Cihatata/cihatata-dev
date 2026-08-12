@@ -16,16 +16,12 @@ const videos = getVideos();
 ---
 
 <BaseLayout
-  title={t('contents.videos')}
-  description={t('contents.videosDescription')}
+  title={`${t('contents.title')} · ${t('contents.videos')}`}
+  description={t('contents.description')}
   path="/contents/videos"
   locale={locale}
 >
-  <PageHeader
-    eyebrow={t('contents.title')}
-    title={t('contents.videos')}
-    description={t('contents.videosDescription')}
-  />
+  <PageHeader title={t('contents.title')} description={t('contents.description')} />
 
   <ContentTabs locale={locale} active="videos" />
 

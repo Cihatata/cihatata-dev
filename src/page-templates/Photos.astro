@@ -17,29 +17,25 @@ const photos = getPhotos();
 ---
 
 <BaseLayout
-  title={t('contents.photos')}
-  description={t('contents.photosDescription')}
+  title={`${t('contents.title')} · ${t('contents.photos')}`}
+  description={t('contents.description')}
   path="/contents/photos"
   locale={locale}
 >
-  <PageHeader
-    eyebrow={t('contents.title')}
-    title={t('contents.photos')}
-    description={t('contents.photosDescription')}
-  >
-    <a
-      href={profileLink}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="mt-4 inline-flex items-center gap-1.5 text-sm text-fg-muted transition-colors hover:text-fg"
-    >
-      <Icon name="unsplash" size={13} />
-      unsplash.com/@{profile.username}
-      <Icon name="external" size={12} />
-    </a>
-  </PageHeader>
+  <PageHeader title={t('contents.title')} description={t('contents.description')} />
 
   <ContentTabs locale={locale} active="photos" />
+
+  <a
+    href={profileLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="mb-6 inline-flex items-center gap-1.5 text-sm text-fg-muted transition-colors hover:text-fg"
+  >
+    <Icon name="unsplash" size={13} />
+    unsplash.com/@{profile.username}
+    <Icon name="external" size={12} />
+  </a>
 
   <PhotoGrid photos={photos} locale={locale} layout="masonry" eagerCount={3} />
 </BaseLayout>
