@@ -45,13 +45,13 @@ const ratio = aspect === 'square' ? '1 / 1' : `${photo.width} / ${photo.height}`
     decoding="async"
     fetchpriority={eager ? 'high' : 'auto'}
     style={`aspect-ratio: ${ratio}`}
-    class="h-full w-full object-cover transition-transform duration-700 ease-[var(--ease-glass)] group-hover:scale-[1.04]"
+    class="block w-full object-cover transition-transform duration-700 ease-[var(--ease-glass)] group-hover:scale-[1.04]"
   />
 
   <span class="photo__veil" aria-hidden="true"></span>
 
   <span
-    class="glass glass--pill photo__badge absolute right-3 bottom-3 flex items-center gap-1.5 px-2.5 py-1 text-[0.6875rem] font-medium"
+    class="glass glass--pill photo__badge flex items-center gap-1.5 px-2.5 py-1 text-[0.6875rem] font-medium"
   >
     <Icon name="external" size={11} />
     {t('photos.viewOnUnsplash')}
@@ -73,8 +73,13 @@ const ratio = aspect === 'square' ? '1 / 1' : `${photo.width} / ${photo.height}`
   }
 
   .photo__badge {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    z-index: 10;
     opacity: 0;
-    transform: translateY(6px);
+    pointer-events: none;
+    transform: translateY(4px);
     transition:
       opacity var(--duration-base) var(--ease-glass),
       transform var(--duration-base) var(--ease-glass);

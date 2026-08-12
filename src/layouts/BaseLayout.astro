@@ -27,6 +27,11 @@ interface Props {
   availableLocales?: readonly Locale[];
   /** Page-specific structured data appended to the site-wide graph. */
   schema?: Record<string, unknown>[];
+  /**
+   * Disable the default full-page view-transition fade. Used on Contents hub
+   * tabs so only the panel swaps while the chrome stays put.
+   */
+  instantTransition?: boolean;
 }
 
 const {
@@ -43,6 +48,7 @@ const {
   noindex,
   availableLocales,
   schema = [],
+  instantTransition = false,
 } = Astro.props;
 
 const t = useTranslations(locale);
@@ -77,7 +83,7 @@ const baseSchema: Record<string, unknown>[] = [
 ---
 
 <!doctype html>
-<html lang={locale} class="scroll-pt-24">
+<html lang={locale} class:list={['scroll-pt-24', instantTransition && 'instant-transition']}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -131,7 +137,11 @@ const baseSchema: Record<string, unknown>[] = [
 
     <Navigation locale={locale} path={path} />
 
-    <main id="main" class="container-page pt-24 pb-28 md:pt-32 md:pb-16">
+    <main
+      id="main"
+      class="container-page pt-24 pb-28 md:pt-32 md:pb-16"
+      transition:animate={instantTransition ? 'none' : undefined}
+    >
       <slot />
     </main>
 

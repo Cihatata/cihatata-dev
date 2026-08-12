@@ -5,6 +5,8 @@ type ThemeName = 'light' | 'dark';
 interface Window {
   __setTheme?: (theme: ThemeName) => void;
   __themeBound?: boolean;
+  __contentsTabsBound?: boolean;
+  __siteNavBound?: boolean;
 }
 
 interface ImportMetaEnv {

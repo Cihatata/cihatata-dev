@@ -12,14 +12,9 @@
   border: 1px solid var(--glass-border);
   /* Opaque enough to stay legible when backdrop-filter is unavailable. */
   background-color: var(--glass-bg-strong);
-  box-shadow:
-    var(--glass-shadow),
-    inset 0 1px 0 0 var(--glass-highlight),
-    inset 0 -1px 0 0 var(--glass-ring);
   transition:
     background-color var(--duration-base) var(--ease-glass),
     border-color var(--duration-base) var(--ease-glass),
-    box-shadow var(--duration-base) var(--ease-glass),
     transform var(--duration-fast) var(--ease-glass);
 }
 
@@ -77,11 +72,6 @@
 .glass--interactive:hover {
   border-color: var(--border-strong);
   transform: translateY(-1px);
-  box-shadow:
-    0 2px 4px rgb(0 0 0 / 0.05),
-    0 16px 40px -12px rgb(0 0 0 / 0.18),
-    inset 0 1px 0 0 var(--glass-highlight),
-    inset 0 -1px 0 0 var(--glass-ring);
 }
 
 .glass--interactive:active {
@@ -196,23 +186,17 @@ html:not(.dark) .theme-icon--sun {
   transform: scale(0.94);
 }
 
-/* The travelling glass pill behind the active item. Shared view-transition
-   names let it morph to its new position across page navigations. */
+/* The travelling glass pill behind the active item. Position is animated with
+   FLIP in Navigation.astro after persisted swaps — no view-transition-name
+   here so page content can fade without dragging the chrome along. */
 .nav-indicator {
   position: absolute;
   inset: 0;
   z-index: -1;
   border-radius: 9999px;
   background-color: var(--glass-bg-strong);
-  border: 1px solid var(--glass-border);
-  box-shadow:
-    inset 0 1px 0 0 var(--glass-highlight),
-    0 1px 3px rgb(0 0 0 / 0.08);
-  view-transition-name: nav-indicator;
-}
-
-.nav-indicator--mobile {
-  view-transition-name: nav-indicator-mobile;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+  transform-origin: 0 0;
 }
 
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {

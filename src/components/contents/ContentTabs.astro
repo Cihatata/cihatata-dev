@@ -24,13 +24,14 @@ const TABS: { id: ContentTab; path: string; icon: IconName }[] = [
 <GlassSurface
   as="nav"
   radius="pill"
-  class="mb-8 inline-flex w-full items-center gap-0.5 p-1 sm:w-auto"
+  class="mb-8 inline-flex w-full items-center gap-0.5 p-1.5 sm:w-auto"
   aria-label={t('contents.title')}
 >
   {
     TABS.map((tab) => (
       <a
         href={localizePath(tab.path, locale)}
+        data-content-tab={tab.id}
         class="nav-link flex-1 gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium sm:flex-none"
         aria-current={tab.id === active ? 'page' : undefined}
       >

@@ -1,8 +1,7 @@
 ---
-import ContentTabs from '~/components/contents/ContentTabs.astro';
+import ContentsChrome from '~/components/contents/ContentsChrome.astro';
 import PostList from '~/components/blog/PostList.astro';
 import TagPill from '~/components/ui/TagPill.astro';
-import PageHeader from '~/components/ui/PageHeader.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { collectTags, getPosts } from '~/lib/blog';
 import { localizePath, useTranslations, type Locale } from '~/i18n/utils';
@@ -23,10 +22,9 @@ const tags = collectTags(posts);
   description={t('contents.description')}
   path="/contents"
   locale={locale}
+  instantTransition
 >
-  <PageHeader title={t('contents.title')} description={t('contents.description')} />
-
-  <ContentTabs locale={locale} active="blogs" />
+  <ContentsChrome locale={locale} active="blogs" />
 
   {
     tags.length > 0 && (

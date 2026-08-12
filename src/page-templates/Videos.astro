@@ -1,7 +1,6 @@
 ---
-import ContentTabs from '~/components/contents/ContentTabs.astro';
+import ContentsChrome from '~/components/contents/ContentsChrome.astro';
 import VideoList from '~/components/videos/VideoList.astro';
-import PageHeader from '~/components/ui/PageHeader.astro';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { getVideos } from '~/data/videos';
 import { useTranslations, type Locale } from '~/i18n/utils';
@@ -20,10 +19,9 @@ const videos = getVideos();
   description={t('contents.description')}
   path="/contents/videos"
   locale={locale}
+  instantTransition
 >
-  <PageHeader title={t('contents.title')} description={t('contents.description')} />
-
-  <ContentTabs locale={locale} active="videos" />
+  <ContentsChrome locale={locale} active="videos" />
 
   <VideoList videos={videos} locale={locale} />
 </BaseLayout>

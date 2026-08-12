@@ -204,6 +204,12 @@
   animation: vt-fade-in var(--duration-base) var(--ease-glass) both;
 }
 
+/* Contents hub tabs: keep the swap silent so only the panel changes. */
+html.instant-transition::view-transition-old(root),
+html.instant-transition::view-transition-new(root) {
+  animation: none !important;
+}
+
 @keyframes vt-fade-out {
   to {
     opacity: 0;
@@ -218,9 +224,48 @@
   }
 }
 
-::view-transition-group(nav-indicator) {
-  animation-duration: var(--duration-base);
-  animation-timing-function: var(--ease-glass);
+/*
+  Fixed chrome must own a view-transition-name so it is excluded from the
+  root snapshot (otherwise vt-fade-* translateY makes the bar jump). The
+  active pill still slides via FLIP in Navigation.astro — do not name it.
+*/
+[data-site-nav='desktop'] {
+  view-transition-name: site-nav-desktop;
+}
+
+[data-site-nav='mobile-controls'] {
+  view-transition-name: site-nav-mobile-controls;
+}
+
+[data-site-nav='mobile-dock'] {
+  view-transition-name: site-nav-mobile-dock;
+}
+
+::view-transition-group(site-nav-desktop),
+::view-transition-group(site-nav-mobile-controls),
+::view-transition-group(site-nav-mobile-dock) {
+  animation: none;
+}
+
+::view-transition-image-pair(site-nav-desktop),
+::view-transition-image-pair(site-nav-mobile-controls),
+::view-transition-image-pair(site-nav-mobile-dock) {
+  isolation: isolate;
+}
+
+::view-transition-old(site-nav-desktop),
+::view-transition-old(site-nav-mobile-controls),
+::view-transition-old(site-nav-mobile-dock) {
+  animation: none;
+  opacity: 0;
+}
+
+::view-transition-new(site-nav-desktop),
+::view-transition-new(site-nav-mobile-controls),
+::view-transition-new(site-nav-mobile-dock) {
+  animation: none;
+  opacity: 1;
+  mix-blend-mode: normal;
 }
 
 @media (prefers-reduced-motion: reduce) {

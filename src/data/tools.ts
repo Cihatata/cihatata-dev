@@ -4,7 +4,6 @@ import ipadPro from '~/assets/tools/ipad-pro-m4.png';
 import lgUltrafine from '~/assets/tools/lg-ultrafine-ergo.png';
 import macbookAir from '~/assets/tools/macbook-air-m1.png';
 import magicKeyboard from '~/assets/tools/magic-keyboard.png';
-import magicTrackpad from '~/assets/tools/magic-trackpad.png';
 import monitorRiser from '~/assets/tools/monitor-riser.png';
 import mxVertical from '~/assets/tools/mx-vertical.jpg';
 import nuphyAir from '~/assets/tools/nuphy-air-75.png';
@@ -37,13 +36,6 @@ export const CURRENT_TOOLS: Tool[] = [
     image: magicKeyboard,
     tr: { name: 'Magic Keyboard' },
     en: { name: 'Magic Keyboard' },
-  },
-  {
-    id: 'magic-trackpad',
-    brand: 'Apple',
-    image: magicTrackpad,
-    tr: { name: 'Magic Trackpad' },
-    en: { name: 'Magic Trackpad' },
   },
   {
     id: 'airpods-3',
@@ -113,12 +105,6 @@ export const CURRENT_TOOLS: Tool[] = [
     brand: 'Cengo',
     tr: { name: 'Şeffaf Tahta Kağıt' },
     en: { name: 'Transparent whiteboard sheet' },
-  },
-  {
-    id: 'controller-stand',
-    brand: 'Spotcha',
-    tr: { name: 'Xbox Kol Standı' },
-    en: { name: 'Xbox controller stand' },
   },
 ];
 

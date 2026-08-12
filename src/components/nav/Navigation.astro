@@ -17,19 +17,24 @@ const items = resolveNavItems(locale, path);
 ---
 
 {/* Desktop: a centred floating glass pill. */}
-<header class="pointer-events-none fixed inset-x-0 top-0 z-50 hidden pt-4 md:block">
+<header
+  transition:persist="site-nav-desktop"
+  data-site-nav="desktop"
+  class="pointer-events-none fixed inset-x-0 top-0 z-50 hidden pt-4 md:block"
+>
   <div class="container-page pointer-events-auto flex items-center justify-center gap-2">
     <GlassSurface
       as="nav"
       radius="pill"
       refract
-      class="flex items-center gap-0.5 p-1"
+      class="flex items-center gap-0.5 p-1.5"
       aria-label={t('nav.label')}
     >
       {
         items.map((item) => (
           <a
             href={item.href}
+            data-nav-path={item.path}
             class="nav-link rounded-full px-3.5 py-1.5 text-sm font-medium"
             aria-current={item.isActive ? 'page' : undefined}
           >
@@ -48,7 +53,11 @@ const items = resolveNavItems(locale, path);
 </header>
 
 {/* Mobile: controls at the top, primary navigation docked to the bottom. */}
-<header class="pointer-events-none fixed inset-x-0 top-0 z-50 pt-3 md:hidden">
+<header
+  transition:persist="site-nav-mobile-controls"
+  data-site-nav="mobile-controls"
+  class="pointer-events-none fixed inset-x-0 top-0 z-50 pt-3 md:hidden"
+>
   <div class="container-page pointer-events-auto flex items-center justify-end gap-2">
     <LangSwitcher locale={locale} path={path} />
     <ThemeToggle locale={locale} />
@@ -56,6 +65,8 @@ const items = resolveNavItems(locale, path);
 </header>
 
 <nav
+  transition:persist="site-nav-mobile-dock"
+  data-site-nav="mobile-dock"
   class="fixed inset-x-0 bottom-0 z-50 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden"
   aria-label={t('nav.label')}
 >
@@ -64,6 +75,7 @@ const items = resolveNavItems(locale, path);
       items.map((item) => (
         <a
           href={item.href}
+          data-nav-path={item.path}
           class="nav-link flex-1 flex-col gap-1 rounded-full px-1 py-1.5 text-[0.625rem] font-medium"
           aria-current={item.isActive ? 'page' : undefined}
         >
@@ -75,3 +87,111 @@ const items = resolveNavItems(locale, path);
     }
   </GlassSurface>
 </nav>
+
+<script>
+  function delocalizePath(pathname: string) {
+    const segments = pathname.replace(/\/+$/, '').split('/').filter(Boolean);
+    if (segments[0] === 'tr') segments.shift();
+    return segments.length ? `/${segments.join('/')}` : '/';
+  }
+
+  function localizePath(path: string, locale: 'en' | 'tr') {
+    const clean = path === '/' ? '' : path.replace(/\/+$/, '');
+    if (locale === 'en') return clean || '/';
+    return `/tr${clean}`;
+  }
+
+  function isNavPathActive(itemPath: string, currentPath: string) {
+    const normalized = currentPath === '/' ? '/' : currentPath.replace(/\/+$/, '');
+    if (itemPath === '/') return normalized === '/';
+    return normalized === itemPath || normalized.startsWith(`${itemPath}/`);
+  }
+
+  function currentLocale(): 'en' | 'tr' {
+    return location.pathname.split('/').filter(Boolean)[0] === 'tr' ? 'tr' : 'en';
+  }
+
+  function flipIndicator(indicator: HTMLElement, toLink: HTMLElement) {
+    const first = indicator.getBoundingClientRect();
+    toLink.prepend(indicator);
+    const last = indicator.getBoundingClientRect();
+
+    const dx = first.left - last.left;
+    const dy = first.top - last.top;
+    const sx = first.width / Math.max(last.width, 1);
+    const sy = first.height / Math.max(last.height, 1);
+
+    if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5 && Math.abs(sx - 1) < 0.01 && Math.abs(sy - 1) < 0.01) {
+      return;
+    }
+
+    indicator.getAnimations().forEach((animation) => animation.cancel());
+    indicator.animate(
+      [
+        { transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` },
+        { transform: 'none' },
+      ],
+      {
+        duration: 320,
+        easing: 'cubic-bezier(0.32, 0.72, 0, 1)',
+        fill: 'none',
+      },
+    );
+  }
+
+  function syncNavGroup(root: Element, indicatorClassName: string) {
+    const path = delocalizePath(location.pathname);
+    const links = [...root.querySelectorAll<HTMLAnchorElement>('a.nav-link[data-nav-path]')];
+    if (links.length === 0) return;
+
+    const active = links.find((link) => isNavPathActive(link.dataset.navPath ?? '', path));
+    if (!active) return;
+
+    let indicator = root.querySelector<HTMLElement>('.nav-indicator');
+
+    links.forEach((link) => {
+      if (link === active) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+
+    if (!indicator) {
+      indicator = document.createElement('span');
+      indicator.className = indicatorClassName;
+      indicator.setAttribute('aria-hidden', 'true');
+      active.prepend(indicator);
+      return;
+    }
+
+    if (indicator.parentElement !== active) {
+      flipIndicator(indicator, active);
+    }
+  }
+
+  function syncLangSwitchers() {
+    const path = delocalizePath(location.pathname);
+    const locale = currentLocale();
+    const other = locale === 'en' ? 'tr' : 'en';
+
+    document.querySelectorAll<HTMLAnchorElement>('a[rel="alternate"][hreflang]').forEach((a) => {
+      const hl = a.getAttribute('hreflang');
+      if (hl === other) a.href = localizePath(path, other);
+    });
+  }
+
+  function syncSiteNav() {
+    const desktop = document.querySelector('[data-site-nav="desktop"]');
+    const mobileDock = document.querySelector('[data-site-nav="mobile-dock"]');
+
+    if (desktop) syncNavGroup(desktop, 'nav-indicator');
+    if (mobileDock) syncNavGroup(mobileDock, 'nav-indicator nav-indicator--mobile');
+    syncLangSwitchers();
+  }
+
+  if (!window.__siteNavBound) {
+    window.__siteNavBound = true;
+    // after-swap: DOM is ready and persist has applied — run FLIP here.
+    document.addEventListener('astro:after-swap', () => {
+      requestAnimationFrame(syncSiteNav);
+    });
+  }
+</script>

@@ -12,6 +12,8 @@ const NAV_ICONS: Record<string, IconName> = {
 
 export type ResolvedNavItem = {
   id: string;
+  /** Locale-independent path, e.g. `/contents`. */
+  path: string;
   href: string;
   labelKey: TranslationKey;
   icon: IconName;
@@ -27,6 +29,7 @@ export function resolveNavItems(locale: Locale, currentPath: string): ResolvedNa
 
   return NAV_ITEMS.map((item) => ({
     id: item.id,
+    path: item.path,
     href: localizePath(item.path, locale),
     labelKey: `nav.${item.id}` as TranslationKey,
     icon: NAV_ICONS[item.id] ?? 'sparkle',

@@ -1,0 +1,70 @@
+---
+import ContentTabs, { type ContentTab } from '~/components/contents/ContentTabs.astro';
+import PageHeader from '~/components/ui/PageHeader.astro';
+import { useTranslations, type Locale } from '~/i18n/utils';
+
+interface Props {
+  locale: Locale;
+  active: ContentTab;
+}
+
+const { locale, active } = Astro.props;
+const t = useTranslations(locale);
+---
+
+{/*
+  Persisted across /contents ↔ videos ↔ photos so the header and tabs stay
+  mounted (no rise-in replay). A small script resyncs the active tab after
+  ClientRouter swaps the panel content.
+*/}
+<div transition:persist="contents-chrome" data-contents-chrome>
+  <PageHeader title={t('contents.title')} description={t('contents.description')} />
+  <ContentTabs locale={locale} active={active} />
+</div>
+
+<script>
+  const TAB_SUFFIX = {
+    blogs: '/contents',
+    videos: '/contents/videos',
+    photos: '/contents/photos',
+  };
+
+  function tabFromPath(pathname: string) {
+    const clean = pathname.replace(/\/+$/, '') || '/';
+    if (clean.endsWith(TAB_SUFFIX.videos)) return 'videos';
+    if (clean.endsWith(TAB_SUFFIX.photos)) return 'photos';
+    return 'blogs';
+  }
+
+  function syncContentTabs() {
+    const chrome = document.querySelector('[data-contents-chrome]');
+    if (!chrome) return;
+
+    const active = tabFromPath(location.pathname);
+
+    chrome.querySelectorAll<HTMLElement>('[data-content-tab]').forEach((tab) => {
+      const on = tab.getAttribute('data-content-tab') === active;
+
+      if (on) tab.setAttribute('aria-current', 'page');
+      else tab.removeAttribute('aria-current');
+
+      let indicator = tab.querySelector<HTMLElement>('.nav-indicator');
+      if (on && !indicator) {
+        indicator = document.createElement('span');
+        indicator.className = 'nav-indicator nav-indicator--tabs';
+        indicator.setAttribute('aria-hidden', 'true');
+        tab.prepend(indicator);
+      } else if (!on && indicator) {
+        indicator.remove();
+      }
+    });
+  }
+
+  if (!window.__contentsTabsBound) {
+    window.__contentsTabsBound = true;
+    document.addEventListener('astro:after-swap', syncContentTabs);
+    document.addEventListener('astro:page-load', syncContentTabs);
+  }
+
+  syncContentTabs();
+</script>
