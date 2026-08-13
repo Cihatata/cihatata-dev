@@ -20,6 +20,8 @@ const target = otherLocale(locale);
   hreflang={target}
   lang={target}
   rel="alternate"
+  data-lang-switch
+  data-locale={target}
   class:list={[
     'glass glass--pill glass--interactive flex h-9 items-center gap-1.5 px-3 text-fg-muted hover:text-fg',
     className,
@@ -30,3 +32,27 @@ const target = otherLocale(locale);
   <Icon name="globe" size={15} />
   <span class="text-xs font-medium tracking-wide">{LOCALE_SHORT[target]}</span>
 </a>
+
+<script>
+  const COOKIE = 'lang';
+  const MAX_AGE = 60 * 60 * 24 * 365;
+
+  function setLocaleCookie(locale: string) {
+    const secure = location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = `${COOKIE}=${locale}; Path=/; Max-Age=${MAX_AGE}; SameSite=Lax${secure}`;
+  }
+
+  const bind = () => {
+    document.querySelectorAll<HTMLAnchorElement>('a[data-lang-switch]').forEach((link) => {
+      if (link.dataset.bound === 'true') return;
+      link.dataset.bound = 'true';
+      link.addEventListener('click', () => {
+        const locale = link.dataset.locale;
+        if (locale === 'en' || locale === 'tr') setLocaleCookie(locale);
+      });
+    });
+  };
+
+  bind();
+  document.addEventListener('astro:page-load', bind);
+</script>

@@ -1,6 +1,5 @@
 import airpods from '~/assets/tools/airpods-3.png';
 import ikeaMarkus from '~/assets/tools/ikea-markus.png';
-import ipadPro from '~/assets/tools/ipad-pro-m4.png';
 import lgUltrafine from '~/assets/tools/lg-ultrafine-ergo.png';
 import macbookAir from '~/assets/tools/macbook-air-m1.png';
 import magicKeyboard from '~/assets/tools/magic-keyboard.png';
@@ -108,12 +107,5 @@ export const WISHLIST_TOOLS: Tool[] = [
     image: nuphyAir,
     tr: { name: 'Nuphy Air 75 Klavye' },
     en: { name: 'Nuphy Air 75 keyboard' },
-  },
-  {
-    id: 'ipad-pro-m4',
-    brand: 'Apple',
-    image: ipadPro,
-    tr: { name: 'iPad Pro 13” M4' },
-    en: { name: 'iPad Pro 13” M4' },
   },
 ];

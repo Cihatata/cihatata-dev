@@ -176,9 +176,10 @@ const items = resolveNavItems(locale, path);
     const locale = currentLocale();
     const other = locale === 'en' ? 'tr' : 'en';
 
-    document.querySelectorAll<HTMLAnchorElement>('a[rel="alternate"][hreflang]').forEach((a) => {
-      const hl = a.getAttribute('hreflang');
-      if (hl === other) a.href = localizePath(path, other);
+    document.querySelectorAll<HTMLAnchorElement>('a[data-lang-switch]').forEach((a) => {
+      a.href = localizePath(path, other);
+      a.setAttribute('hreflang', other);
+      a.dataset.locale = other;
     });
   }
 
