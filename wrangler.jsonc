@@ -3,6 +3,8 @@
   "name": "cihatata-dev",
   "main": "@astrojs/cloudflare/entrypoints/server",
   "compatibility_date": "2026-04-15",
+  // Keep the workers.dev URL as a fallback while custom domains are attached.
+  "workers_dev": true,
   // `nodejs_compat` is needed by Astro's server runtime; without
   // `global_fetch_strictly_public` a same-origin fetch would bypass the router
   // and skip the middleware.
@@ -11,6 +13,10 @@
     "binding": "ASSETS",
     "directory": "./dist/client"
   },
+  "routes": [
+    { "pattern": "cihatata.dev", "custom_domain": true },
+    { "pattern": "www.cihatata.dev", "custom_domain": true }
+  ],
   "observability": {
     "enabled": true
   }
