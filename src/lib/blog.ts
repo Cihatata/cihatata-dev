@@ -11,7 +11,7 @@ export type Post = BlogEntry & {
   readingMinutes: number;
 };
 
-const WORDS_PER_MINUTE = 200;
+const WORDS_PER_MINUTE = 290;
 
 function readingMinutes(body: string | undefined): number {
   if (!body) return 1;

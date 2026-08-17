@@ -75,7 +75,7 @@ export const ui = {
       'Short daily notes about what I am building, reading and learning. Coming soon.',
     'dailies.comingSoon': 'Coming soon',
     'dailies.body':
-      'Short, unfiltered notes about what I am building, reading and learning each day. I am still shaping the format, so this page is intentionally empty for now.',
+      '...',
 
     'tools.title': 'Tools',
     'tools.description':
@@ -161,7 +161,7 @@ export const ui = {
       'Her gün ne yaptığıma, ne okuduğuma ve ne öğrendiğime dair kısa notlar. Çok yakında.',
     'dailies.comingSoon': 'Çok yakında',
     'dailies.body':
-      'Her gün ne geliştirdiğime, ne okuduğuma ve ne öğrendiğime dair kısa notlar paylaşacağım. Formatı hâlâ şekillendiriyorum, bu yüzden burası şimdilik bilinçli olarak boş.',
+      '...',
 
     'tools.title': 'Araçlar',
     'tools.description':

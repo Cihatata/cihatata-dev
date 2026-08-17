@@ -98,6 +98,10 @@ Google Maps kullanılabiliyor ancak Özbekistan’da yerel halkın en çok kulla
 
 Taksi ücretleri Türkiye’ye kıyasla oldukça uygun. Biz de bebeğimizle seyahat ettiğimiz için birçok noktaya taksiyle gittik ve ulaşım konusunda hiç zorlanmadık.
 
+## İletişim
+
+Gitmeden önce izlediğim videolarda Özbeklerin konuştuğu Türkçenin rahatlıkla anlaşılabildiği yazıyordu. Orada birçok kelime tanıdık geliyordu; ancak insanların günlük konuşmalarında kullandığı Özbekistan Türkçesini pek anlayamadık. Özellikle hızlı konuşmalarda yerel halkla iletişim kurmakta zorlandık. Yine de insanlar yardımseverdi; basit kelimeler, jestler ve gerektiğinde telefondan çeviri uygulaması işimizi gördü.
+
 ## Taşkent
 
 Taşkent açıkçası beklentimin çok üzerinde çıkan bir şehir oldu. Şehir oldukça yeşil, yollar düzenli ve trafik beklediğimden daha sakindi. Şehirde güzel meydanları var. Hazreti İmam kompleksi ve etrafındaki meydan da çok huzurlu.
@@ -138,6 +142,10 @@ Sadece gezilecek yapılarıyla değil, verdiği atmosferle de insanı etkileyen 
 -   Bibi Hanım Camii
 -   Hazreti Hızır Camii
 -   Siyob Pazarı
+
+## Yemek
+
+Semerkand’da yediğimiz en iyi samsayı [bu adreste](https://maps.app.goo.gl/FSGkZhrLvfUYi8Ja8) bulduk. Dükkanı tatlı bir yaşlı kadın işletiyor; fiyatlar da oldukça uygundu. İletişim kurmak biraz zordu ama samsa o kadar lezzetliydi ki tekrar tekrar uğradık. Semerkand’a gidecekseniz burada mutlaka yemek yemenizi tavsiye ederim.
 
 Eğer seyahat planınızı oluşturuyorsanız size en önemli tavsiyem, **en fazla zamanı Semerkand’a ayırmanız** olur.
 

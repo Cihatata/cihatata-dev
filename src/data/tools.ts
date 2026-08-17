@@ -4,11 +4,13 @@ import lgUltrafine from '~/assets/tools/lg-ultrafine-ergo.png';
 import macbookAir from '~/assets/tools/macbook-air-m1.png';
 import magicKeyboard from '~/assets/tools/magic-keyboard.png';
 import mxVertical from '~/assets/tools/mx-vertical.jpg';
-import nuphyAir from '~/assets/tools/nuphy-air-75.png';
+import nuphyAir from '~/assets/tools/nuphy-air75.webp';
 import philipsHue from '~/assets/tools/philips-hue-play.png';
-import pomodoro from '~/assets/tools/pomodoro-timer.png';
 import standingDesk from '~/assets/tools/standing-desk.jpg';
 import xboxSeriesX from '~/assets/tools/xbox-series-x.png';
+import x100vi from '~/assets/tools/X100VI-gümüs.png';
+import sennheiser from '~/assets/tools/sennheiser-accentum.png';
+
 
 import type { Locale } from '~/i18n/utils';
 
@@ -50,13 +52,6 @@ export const CURRENT_TOOLS: Tool[] = [
     en: { name: '32UN88AP-W UltraFine Ergo 32”' },
   },
   {
-    id: 'pomodoro-timer',
-    brand: 'TFA Dostmann',
-    image: pomodoro,
-    tr: { name: 'Pomodoro Saati' },
-    en: { name: 'Pomodoro timer' },
-  },
-  {
     id: 'mx-vertical',
     brand: 'Logitech',
     image: mxVertical,
@@ -85,6 +80,13 @@ export const CURRENT_TOOLS: Tool[] = [
     en: { name: 'Xbox Series X' },
   },
   {
+    id: 'sennheiser-accentum',
+    brand: 'Sennheiser',
+    image: sennheiser,
+    tr: { name: 'Sennheiser Accentum Kulaklık' },
+    en: { name: 'Sennheiser Accentum Headphones' },
+  },
+  {
     id: 'philips-hue',
     brand: 'Philips',
     image: philipsHue,
@@ -97,6 +99,13 @@ export const CURRENT_TOOLS: Tool[] = [
     tr: { name: 'Şeffaf Tahta Kağıt' },
     en: { name: 'Transparent whiteboard sheet' },
   },
+  {
+    id: 'x100vi-gümüs',
+    brand: 'Fujifilm',
+    image: x100vi,
+    tr: { name: 'Fujifilm X100VI Gümüş Kamera' },
+    en: { name: 'Fujifilm X100VI Silver Camera' },
+  },
 ];
 
 /** Gear I would like to add. */
@@ -105,7 +114,14 @@ export const WISHLIST_TOOLS: Tool[] = [
     id: 'nuphy-air-75',
     brand: 'Nuphy',
     image: nuphyAir,
-    tr: { name: 'Nuphy Air 75 Klavye' },
-    en: { name: 'Nuphy Air 75 keyboard' },
+    tr: { name: 'Nuphy Air 75 v3 Klavye' },
+    en: { name: 'Nuphy Air 75 v3 keyboard' },
+  },
+  {
+    id: 'mac-m5-max',
+    brand: 'Apple',
+    // image: nuphyAir,
+    tr: { name: 'Macbook Pro 14 M5 Max' },
+    en: { name: 'Macbook Pro 14 M5 Max' },
   },
 ];
