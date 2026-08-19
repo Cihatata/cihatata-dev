@@ -46,6 +46,11 @@ const site = Astro.site ?? new URL('https://cihatata.dev');
 const canonical = absoluteUrl(localizePath(path, locale), site);
 const imageUrl = absoluteUrl(image, site);
 const pageTitle = path === '/' ? `${AUTHOR.name} — ${AUTHOR.jobTitle}` : `${title} · ${AUTHOR.name}`;
+const llmsTxt = absoluteUrl(localizePath('/llms.txt', locale), site);
+const markdownAlternate =
+  !noindex && (path === '/about' || path.startsWith('/contents/blog/'))
+    ? `${canonical}.md`
+    : undefined;
 
 const alternates = availableLocales.map((code) => ({
   code,
@@ -58,6 +63,12 @@ const alternateOgLocales = availableLocales.filter((code) => code !== locale);
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+<link rel="describedby" href={llmsTxt} />
+{
+  markdownAlternate && (
+    <link rel="alternate" type="text/markdown" title="Markdown" href={markdownAlternate} />
+  )
+}
 
 {
   noindex ? (

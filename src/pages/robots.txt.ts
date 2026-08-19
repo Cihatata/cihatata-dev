@@ -11,6 +11,11 @@ export const GET: APIRoute = ({ site }) => {
     '',
     `Sitemap: ${origin}/sitemap.xml`,
     '',
+    '# LLM-readable index — https://llmstxt.org',
+    `# ${origin}/llms.txt`,
+    `# ${origin}/llms-full.txt`,
+    `# ${origin}/tr/llms.txt`,
+    '',
   ].join('\n');
 
   return new Response(body, {
